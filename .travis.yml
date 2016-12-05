@@ -1,0 +1,23 @@
+.travis.yml:
+
+install:
+  - npm install -g npm@2
+
+language: node_js
+node_js:
+  - "4"
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+before_script:
+  - npm install
+  - mysql -u root -e 'create database testDB;'
+  - mysql -u root testDB < sql/travis.sql
+
+script: mocha
