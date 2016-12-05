@@ -10,8 +10,8 @@ const assert = require('assert'),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: process.env.MYSQL_USER || 'root',
-    password: password,
+    user: process.env.MYSQL_USER || 'user',
+    password: 'password',
     port: 3306,
     database: 'testDB'
 });
@@ -27,7 +27,7 @@ describe('testing auth service', function() {
         co(function*() {
             try {
                 const data = {
-                    username: 'dirk'
+                    username: 'bibbo'
                 };
                 const hash = yield encryptonator.encryptPassword('1234');
                 data.password = hash;
@@ -67,10 +67,10 @@ describe('testing auth service', function() {
         co(function*() {
             try {
                 const data = {
-                    username: 'dirk',
+                    username: 'bibbo',
                     password: '1234'
                 };
-                const user = yield loginDataService.login(data);
+                const user = yield loginDataService.login(data.username);
                 const pass = yield encryptonator.comparePassword(data.password, user[0].password);
                 if (pass) {
                     assert(user, 'False');
