@@ -1,0 +1,42 @@
+{
+    "name": "shco",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "directories": {
+        "test": "test"
+    },
+    "dependencies": {
+        "bcrypt": "^1.0.0",
+        "bluebird": "^3.4.0",
+        "body-parser": "^1.15.1",
+        "co": "^4.6.0",
+        "compression": "^1.6.2",
+        "connection-provider": "^1.0.1",
+        "cookie-parser": "^1.4.3",
+        "express": "^4.13.4",
+        "express-flash": "^0.0.2",
+        "express-handlebars": "^3.0.0",
+        "express-myconnection": "^1.0.4",
+        "express-session": "^1.13.0",
+        "mysql": "^2.10.2"
+    },
+    "devDependencies": {
+        "mocha": "~2.4.5"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/denvereezy/shco.git"
+    },
+    "author": "denver daniels",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/denvereezy/shco/issues"
+    },
+    "homepage": "https://github.com/denvereezy/shco#readme"
+}
