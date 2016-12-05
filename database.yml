@@ -1,5 +1,5 @@
 test:
   adapter: mysql2
-  database: music
+  database: shco
   username: travis
   encoding: utf8
