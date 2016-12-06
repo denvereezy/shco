@@ -2,7 +2,9 @@
 create table users (
   id int not null primary key auto_increment,
   username varchar(25) not null,
-  password varchar(100) not null
+  password varchar(100) not null,
+  role varchar(25) not null,
+  identifier varchar(25) not null
 );
 
 create table teachers (
