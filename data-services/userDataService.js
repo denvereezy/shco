@@ -7,14 +7,14 @@ module.exports = function(connection) {
     };
 
     this.checkUsername = function(username) {
-      return queryDataService.executeQuery('select * from users where username = ?', username);
+        return queryDataService.executeQuery('select * from users where username = ?', username);
     };
 
-    this.profile = function(id){
-      return queryDataService.executeQuery('select * from users where id = ?', id);
+    this.profile = function(id) {
+        return queryDataService.executeQuery('select * from users where id = ?', id);
     };
 
-    this.update = function(hash, id){
-      return queryDataService.executeQuery('update users set password = ? where id = ?', [hash, id]);
+    this.update = function(hash, id) {
+        return queryDataService.executeQuery('update users set password = ? where id = ?', [hash, id]);
     };
 };
