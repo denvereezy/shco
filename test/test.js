@@ -87,6 +87,19 @@ describe('testing auth service', function() {
             };
         });
     });
+    it('should update a user password', function(done) {
+        co(function*() {
+            try {
+                const id = 1;
+                const password = yield encryptonator.encryptPassword('123456');
+                const result = yield userDataService.add(password, id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
 });
 
 describe('testing teacher service', function() {
