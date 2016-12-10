@@ -10,8 +10,8 @@ const assert = require('assert'),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: process.env.MYSQL_USER || 'root',
-    password: password,
+    user: process.env.MYSQL_USER || 'user',
+    password: 'password',
     port: 3306,
     database: 'testDB'
 });
@@ -92,7 +92,7 @@ describe('testing auth service', function() {
             try {
                 const id = 1;
                 const password = yield encryptonator.encryptPassword('123456');
-                const result = yield userDataService.add(password, id);
+                const result = yield userDataService.update(password, id);
                 assert(result);
                 done();
             } catch (err) {
