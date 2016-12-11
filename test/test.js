@@ -10,8 +10,8 @@ const assert = require('assert'),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: process.env.MYSQL_USER || 'user',
-    password: 'password',
+    user: process.env.MYSQL_USER || 'root',
+    password: password,
     port: 3306,
     database: 'testDB'
 });
