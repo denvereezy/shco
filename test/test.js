@@ -191,4 +191,33 @@ describe('testing payment service', function() {
             };
         });
     });
+    it('should make payment for other activities', function(done) {
+        co(function*() {
+            try {
+                var data = {
+                    month: 'n/a',
+                    payment_date: '2016-12-10',
+                    amount: 7000,
+                    comments: 'got new amps'
+                };
+                const result = yield paymentDataService.otherPayments(data);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show other payments', function(done) {
+        co(function*() {
+            try {
+                const result = yield paymentDataService.showOtherPayments();
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
 });
