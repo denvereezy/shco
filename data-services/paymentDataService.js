@@ -16,7 +16,7 @@ module.exports = function(connection) {
     };
 
     this.showPayments = function() {
-        return queryDataService.executeQuery('select payments.id, name, amount, month, status, DATE_FORMAT(payment_date,"%d %b %y") as payment_date from payments inner join teachers on payments.teacher_id = teachers.id');
+        return queryDataService.executeQuery('select payments.id, name, amount, month, status, DATE_FORMAT(payment_date,"%d %b %y") as payment_date from payments inner join teachers on payments.teacher_id = teachers.id order by payments.id desc');
     };
 
     this.show = function() {
@@ -29,5 +29,13 @@ module.exports = function(connection) {
 
     this.delete = function(id) {
         return queryDataService.executeQuery('delete from payments where id = ?', id);
+    };
+
+    this.showOtherPayments = function() {
+        return queryDataService.executeQuery('select id, DATE_FORMAT(payment_date,"%d %b %y") as payment_date, amount, comments from extras');
+    };
+
+    this.otherPayments = function(data) {
+        return queryDataService.executeQuery('insert into extras set ?', data);
     };
 };
