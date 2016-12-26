@@ -1,0 +1,31 @@
+{{#if admin}}
+    <a class="btn btn-success pull-right" href="/make-payment">make payment</a>
+    <table class="table table-striped">
+        <thead class="thead-inverse">
+            <th>Teacher</th>
+            <th>For month</th>
+            <th>Amount</th>
+            <th>Date paid</th>
+            <th>Payment status</th>
+            <th>Actions</th>
+            <tbody>
+                {{#each result}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{month}}</td>
+                        <td>R{{amount}}</td>
+                        <td>{{payment_date}}</td>
+                        <td>{{status}}</td>
+                        <td><a class="btn btn-warning" href="/edit/{{id}}">Edit</a>
+                        </td>
+                        <td>
+                            <form class="" action="/delete/{{id}}" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </thead>
+    </table>
+{{/if}}
