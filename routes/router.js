@@ -13,7 +13,10 @@ exports.login = function(req, res, next) {
 };
 
 exports.makePayment = function(req, res, next) {
-    res.render('payments');
+  var user = req.session.user;
+    res.render('payments',{
+      user:user
+    });
 };
 
 exports.home = function(req, res, next) {
@@ -22,11 +25,13 @@ exports.home = function(req, res, next) {
     if (teacher) {
         res.render('index', {
             data: 'Welcome back ' + user + '!',
+            user:user,
             layout: 'teachers'
         });
     } else {
         res.render('index', {
-            data: 'Welcome back ' + user + '!'
+            data: 'Welcome back ' + user + '!',
+            user:user
         });
     };
 };
