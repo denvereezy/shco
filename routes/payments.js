@@ -3,11 +3,13 @@ const co = require('co');
 exports.showAdd = function(req, res, next) {
     co(function*() {
         try {
+            var user = req.session.user;
             const services = yield req.getServices();
             const paymentDataService = services.paymentDataService;
             const result = yield paymentDataService.show();
             res.render('addPayments', {
-                teacher: result
+                teacher: result,
+                user: user
             });
         } catch (err) {
             req.flash('alert', 'error occurred');
@@ -20,13 +22,15 @@ exports.showAdd = function(req, res, next) {
 exports.show = function(req, res, next) {
     co(function*() {
         try {
-            const services = yield req.getServices();
             var admin = req.session.role === 'admin';
+            var user = req.session.user;
+            const services = yield req.getServices();
             const paymentDataService = services.paymentDataService;
             const result = yield paymentDataService.showPayments();
             res.render('payments', {
                 result: result,
-                admin: admin
+                admin: admin,
+                user: user
             });
         } catch (err) {
             req.flash('alert', 'error occurred');
@@ -63,12 +67,14 @@ exports.addPayment = function(req, res, next) {
 exports.edit = function(req, res, next) {
     co(function*() {
         try {
+            var user = req.session.user;
             var id = req.params.id;
             const services = yield req.getServices();
             const paymentDataService = services.paymentDataService;
             const result = yield paymentDataService.edit(id);
             res.render('edit', {
-                data: result
+                data: result,
+                user: user
             });
         } catch (err) {
             req.flash('alert', 'Please check if values correct values were entered');
