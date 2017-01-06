@@ -48,7 +48,7 @@ exports.addPayment = function(req, res, next) {
                 payment_date: req.body.payment_date,
                 amount: req.body.amount,
                 teacher_id: req.body.teacher_id,
-                status: 'pending'
+                status: 'received'
             };
 
             const services = yield req.getServices();
