@@ -5,6 +5,7 @@ exports.profile = function(req, res, next) {
     co(function*() {
         try {
             var user_id = req.session.user_id;
+            var user = req.session.user;
             var role = req.session.role;
             var layout;
             switch (role) {
@@ -20,6 +21,7 @@ exports.profile = function(req, res, next) {
             const result = yield userDataService.profile(user_id);
             res.render('profile', {
                 data: result,
+                user: user,
                 layout: layout
             });
         } catch (err) {

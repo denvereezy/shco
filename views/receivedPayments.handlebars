@@ -1,6 +1,4 @@
-{{#if admin}}
-    <a class="btn btn-success pull-right" href="/make-payment">make payment</a>
-    <div class="table-responsive">
+<div class="table-responsive">
     <table class="table table-striped">
         <thead class="thead-inverse">
             <th>Teacher</th>
@@ -17,11 +15,9 @@
                         <td>R{{amount}}</td>
                         <td>{{payment_date}}</td>
                         <td>{{status}}</td>
-                        <td><a class="btn btn-warning" href="/edit/{{id}}">Edit</a>
-                        </td>
                         <td>
-                            <form class="" action="/delete/{{id}}" method="post">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                            <form class="" action="/teacher-payment/update/{{id}}" method="post">
+                                <input type="submit" name="{{status}}" class="btn btn-success" value="Confirm">
                             </form>
                         </td>
                     </tr>
@@ -29,5 +25,11 @@
             </tbody>
         </thead>
     </table>
-  </div>
-{{/if}}
+</div>
+<script src="/js/jquery.min.js"></script>
+<script type="text/javascript">
+    if ($("input[name='confirmed']")) {
+        $("input[name='confirmed']").prop('disabled', true);
+        $("input[name='confirmed']").val('Confirmed');
+    };
+</script>
