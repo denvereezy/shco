@@ -64,6 +64,9 @@ app.get('/received-payments', router.checkUser, teachers.receivedPayments);
 app.get('/profile', router.checkUser, users.profile);
 app.post('/profile/update/:id', router.checkUser, users.update);
 app.post('/teacher-payment/update/:id', router.checkUser, teachers.acceptPayment);
+app.get('/extras', router.checkUser, payments.showOtherPayments);
+app.get('/add-payment', router.checkUser, router.add);
+app.post('/add-payment', router.checkUser, payments.addOtherPayments);
 app.get('/logout', router.checkUser, router.checkUser, router.logout);
 
 
