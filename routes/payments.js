@@ -124,3 +124,46 @@ exports.delete = function(req, res, next) {
         };
     });
 };
+
+exports.addOtherPayments = function(req, res, next) {
+    co(function*() {
+        try {
+            var data = {
+                month: 'n/a',
+                payment_date: req.body.date,
+                amount: req.body.amount,
+                comments: req.body.comments
+            };
+            const services = yield req.getServices();
+            const paymentDataService = services.paymentDataService;
+            const result = yield paymentDataService.otherPayments(data);
+            req.flash('success', 'Payment made');
+            res.redirect('/extras');
+        } catch (err) {
+            req.flash('alert', 'Error occurred on deleting item');
+            res.redirect('/extras');
+            next(err);
+        };
+    });
+};
+
+exports.showOtherPayments = function(req, res, next) {
+    co(function*() {
+        try {
+            var user = req.session.user;
+            var admin = req.session.role === 'admin';
+            const services = yield req.getServices();
+            const paymentDataService = services.paymentDataService;
+            const result = yield paymentDataService.showOtherPayments();
+            res.render('extras', {
+              admin: admin,
+              result:result,
+              user: user
+            });
+        } catch (err) {
+            req.flash('alert', 'Error occurred on deleting item');
+            res.redirect('/extras');
+            next(err);
+        };
+    });
+};

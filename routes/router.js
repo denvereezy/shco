@@ -36,6 +36,13 @@ exports.home = function(req, res, next) {
     };
 };
 
+exports.add = function(req, res, next) {
+  var user = req.session.user;
+  res.render('addOtherPayment', {
+    user: user
+  });
+};
+
 exports.logout = function(req, res, next) {
     delete req.session.user
     res.redirect("/");
