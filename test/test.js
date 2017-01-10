@@ -87,6 +87,7 @@ describe('testing auth service', function() {
             };
         });
     });
+
     it('should update a user password', function(done) {
         co(function*() {
             try {
@@ -191,6 +192,7 @@ describe('testing payment service', function() {
             };
         });
     });
+    
     it('should make payment for other activities', function(done) {
         co(function*() {
             try {
@@ -209,10 +211,54 @@ describe('testing payment service', function() {
         });
     });
 
-    it('should show other payments', function(done) {
+    it('should show payments for other activities', function(done) {
         co(function*() {
             try {
                 const result = yield paymentDataService.showOtherPayments();
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show payment for other activities to edit', function(done) {
+        co(function*() {
+            try {
+                var id = 1;
+                const result = yield paymentDataService.editOtherPayment(id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should update payment for other activities', function(done) {
+        co(function*() {
+            try {
+                var id = 1,
+                    data = {
+                      amount: 11,
+                      payment_date: '2017-01-07',
+                      comments: 'n/a'
+                    };
+                const result = yield paymentDataService.updateOtherPayment(data, id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should delete payment for other activities', function(done) {
+        co(function*() {
+            try {
+                const id = 1;
+                const result = yield paymentDataService.deleteOtherPayment(id);
                 assert(result);
                 done();
             } catch (err) {
