@@ -78,16 +78,22 @@
     </div>
     <script src="/js/jquery.min.js"></script>
     <script>
-        $('#alerts').addClass('hidden')
+    $(document).ready(function() {
+
+        $('#alerts').addClass('hidden');
+        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+           $(".alert").slideUp(500);
+         });
 
         function alert() {
-            $('.alert').show()
-            $('#alerts').removeClass('hidden')
+            $('.alert').show();
+            $('#alerts').removeClass('hidden');
         };
 
         function goBack() {
             window.history.back();
-        }
+        };
+    });
     </script>
     <script src="/js/bootstrap.min.js"></script>
 </body>
