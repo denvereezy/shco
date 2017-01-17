@@ -1,3 +1,9 @@
+{{#if messages.alert}}
+    <p class="alert alert-danger">{{messages.alert}}</p>
+{{/if}}
+{{#if messages.success}}
+    <p class="alert alert-success">{{messages.success}}</p>
+{{/if}}
 <div class="table-responsive">
     <table class="table table-striped">
         <thead class="thead-inverse">
@@ -5,7 +11,6 @@
             <th>For month</th>
             <th>Amount</th>
             <th>Date paid</th>
-            <th>Payment status</th>
             <th>Actions</th>
             <tbody>
                 {{#each result}}
@@ -14,7 +19,6 @@
                         <td>{{month}}</td>
                         <td>R{{amount}}</td>
                         <td>{{payment_date}}</td>
-                        <td>{{status}}</td>
                         <td>
                             <form class="" action="/teacher-payment/update/{{id}}" method="post">
                                 <input type="submit" name="{{status}}" class="btn btn-success" value="Confirm">
