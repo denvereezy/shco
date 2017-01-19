@@ -125,12 +125,12 @@ exports.delete = function(req, res, next) {
     });
 };
 
-exports.addOtherPayments = function(req, res, next) {
+exports.addOtherPayment = function(req, res, next) {
     co(function*() {
         try {
             var data = {
                 month: 'n/a',
-                payment_date: req.body.date,
+                payment_date: req.body.payment_date,
                 amount: req.body.amount,
                 comments: req.body.comments
             };
@@ -156,10 +156,71 @@ exports.showOtherPayments = function(req, res, next) {
             const paymentDataService = services.paymentDataService;
             const result = yield paymentDataService.showOtherPayments();
             res.render('extras', {
-              admin: admin,
-              result:result,
-              user: user
+                admin: admin,
+                result: result,
+                user: user
             });
+        } catch (err) {
+            req.flash('alert', 'Error occurred');
+            res.redirect('/extras');
+            next(err);
+        };
+    });
+};
+
+exports.editOtherPayment = function(req, res, next) {
+    co(function*() {
+        try {
+            var user = req.session.user,
+                admin = req.session.role === 'admin',
+                id = req.params.id;
+            const services = yield req.getServices();
+            const paymentDataService = services.paymentDataService;
+            const result = yield paymentDataService.editOtherPayment(id);
+            res.render('edit-payment', {
+                admin: admin,
+                result: result,
+                user: user
+            });
+        } catch (err) {
+            req.flash('alert', 'Error occurred on updating item');
+            res.redirect('/edit/payment/' + id);
+            next(err);
+        };
+    });
+};
+
+exports.updateOtherPayment = function(req, res, next) {
+    co(function*() {
+        try {
+            var id = req.params.id;
+            var data = {
+                payment_date: req.body.payment_date,
+                amount: req.body.amount,
+                comments: req.body.comments
+            };
+            const services = yield req.getServices();
+            const paymentDataService = services.paymentDataService;
+            const result = yield paymentDataService.updateOtherPayment(data, id);
+            req.flash('success', 'Update successful');
+            res.redirect('/extras');
+        } catch (err) {
+            req.flash('alert', 'Please check if values correct values were entered');
+            res.redirect('/edit/payment/' + id);
+            next(err);
+        };
+    });
+};
+
+exports.deleteOtherPayment = function(req, res, next) {
+    co(function*() {
+        try {
+            var id = req.params.id;
+            const services = yield req.getServices();
+            const paymentDataService = services.paymentDataService;
+            const result = yield paymentDataService.deleteOtherPayment(id);
+            req.flash('success', 'Delete successful');
+            res.redirect('/extras');
         } catch (err) {
             req.flash('alert', 'Error occurred on deleting item');
             res.redirect('/extras');
