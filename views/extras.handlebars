@@ -1,0 +1,35 @@
+{{#if admin}}
+{{#if messages.success}}
+    <div class="alert alert-success alert-dismissable fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p>{{messages.success}}</p>
+    </div>
+{{/if}}
+    <div class="table-responsive">
+      <a class="btn btn-success pull-right" href="/add-payment">make payment</a>
+        <table class="table table-striped">
+            <thead class="thead-inverse">
+                <th>Amount</th>
+                <th>Date paid</th>
+                <th>Description</th>
+                <th>Actions</th>
+                <tbody>
+                    {{#each result}}
+                        <tr>
+                            <td>R{{amount}}</td>
+                            <td>{{payment_date}}</td>
+                            <td><textarea name="name" rows="2" cols="20" disabled="true">{{comments}}</textarea></td>
+                            <td><a class="btn btn-warning" href="/edit/payment/{{id}}">Edit</a>
+                            </td>
+                            <td>
+                                <form class="" action="/delete/payment/{{id}}" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </thead>
+        </table>
+    </div>
+{{/if}}
