@@ -1,0 +1,20 @@
+{{#if admin}}
+    {{#result}}
+        <form class="col-md-8" action="/update/payment/{{id}}" method="post">
+            <div class="form-group">
+                <label>Amount</label>
+                <input class="form-control" type="number" name="amount" value="{{amount}}" required>
+            </div>
+            <div class="form-group">
+                <label>Date paid</label>
+                <input class="form-control" type="date" name="payment_date" value="{{payment_date}}" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" name="comments" rows="8" cols="80">{{comments}}</textarea>
+            </div>
+            <input class="btn btn-success" type="submit" value="Update">
+            <button class="btn btn-default pull-right" onclick="goBack()">Cancel</button>
+        </form>
+    {{/result}}
+{{/if}}
