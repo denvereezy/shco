@@ -9,17 +9,17 @@ const express      = require('express'),
       flash        = require('express-flash'),
       app          = express();
 
-const login = require('./routes/login');
+const login    = require('./routes/login');
 const payments = require('./routes/payments');
-const router = require('./routes/router');
+const router   = require('./routes/router');
 const teachers = require('./routes/teachers');
-const users = require('./routes/users');
+const users    = require('./routes/users');
 
 const TeacherDataService = require('./data-services/teacherDataService');
-const QueryDataService = require('./data-services/queryDataService');
-const LoginDataService = require('./data-services/loginDataService');
+const QueryDataService   = require('./data-services/queryDataService');
+const LoginDataService   = require('./data-services/loginDataService');
 const PaymentDataService = require('./data-services/paymentDataService');
-const UserDataService = require('./data-services/userDataService');
+const UserDataService    = require('./data-services/userDataService');
 
 const dbOptions = {
   host: 'localhost',
@@ -66,7 +66,10 @@ app.post('/profile/update/:id', router.checkUser, users.update);
 app.post('/teacher-payment/update/:id', router.checkUser, teachers.acceptPayment);
 app.get('/extras', router.checkUser, payments.showOtherPayments);
 app.get('/add-payment', router.checkUser, router.add);
-app.post('/add-payment', router.checkUser, payments.addOtherPayments);
+app.post('/add-payment', router.checkUser, payments.addOtherPayment);
+app.get('/edit/payment/:id', router.checkUser, payments.editOtherPayment);
+app.post('/update/payment/:id', router.checkUser, payments.updateOtherPayment);
+app.post('/delete/payment/:id', router.checkUser, payments.deleteOtherPayment);
 app.get('/logout', router.checkUser, router.checkUser, router.logout);
 
 
