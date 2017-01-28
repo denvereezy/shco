@@ -30,3 +30,16 @@ create table extras (
   amount int not null,
   comments varchar(100) not null
 );
+
+create table students (
+  id int not null primary key auto_increment,
+  name varchar(25) not null,
+  surname varchar(25) not null
+);
+
+create table attendance (
+  id int not null primary key auto_increment,
+  student_id int not null,
+  lesson date not null,
+  foreign key(student_id) references students(id)
+);
