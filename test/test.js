@@ -3,10 +3,14 @@ const assert = require('assert'),
     UserDataService = require('../data-services/userDataService'),
     TeacherDataService = require('../data-services/teacherDataService'),
     PaymentDataService = require('../data-services/paymentDataService'),
+    StudentDataService = require('../data-services/studentDataService'),
+    AttendanceDataService = require('../data-services/attendanceDataService'),
     encryptonator = require('encryptonator'),
     mysql = require('mysql'),
     co = require('co'),
-    password = process.env.MYSQL_PWD !== null ? process.env.MYSQL_PWD : 'passw0rd';
+    password = process.env.MYSQL_PWD !== null
+        ? process.env.MYSQL_PWD
+        : 'passw0rd';
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -17,14 +21,16 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
-const teacherDataService = new TeacherDataService(connection),
-    loginDataService = new LoginDataService(connection),
-    userDataService = new UserDataService(connection)
-    paymentDataService = new PaymentDataService(connection);
+const teacherDataService  = new TeacherDataService(connection),
+    loginDataService      = new LoginDataService(connection),
+    userDataService       = new UserDataService(connection)
+    paymentDataService    = new PaymentDataService(connection),
+    studentDataService    = new StudentDataService(connection),
+    attendanceDataService = new AttendanceDataService(connection);
 
 describe('testing auth service', function() {
     it('should add user to database', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const data = {
                     username: 'bibbo',
@@ -43,7 +49,7 @@ describe('testing auth service', function() {
     });
 
     it('should prevent adding user to database if username is taken', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const data = {
                     username: 'donkey',
@@ -68,7 +74,7 @@ describe('testing auth service', function() {
     });
 
     it('should log in a user', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const data = {
                     username: 'bibbo',
@@ -89,7 +95,7 @@ describe('testing auth service', function() {
     });
 
     it('should update a user password', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const id = 1;
                 const password = yield encryptonator.encryptPassword('123456');
@@ -105,11 +111,11 @@ describe('testing auth service', function() {
 
 describe('testing teacher service', function() {
     it('should add a teacher', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const data = {
                     name: 'Denver',
-                    surname: 'Daniels',
+                    surname: 'Daniels'
                 };
                 const teacher = yield teacherDataService.add(data);
                 assert(teacher);
@@ -123,7 +129,7 @@ describe('testing teacher service', function() {
 
 describe('testing payment service', function() {
     it('should make a payment', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 var date = new Date();
                 const data = {
@@ -143,7 +149,7 @@ describe('testing payment service', function() {
     });
 
     it('should show a payment for givin id', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const teacherId = 1;
                 const result = yield paymentDataService.showPayment(teacherId);
@@ -160,7 +166,7 @@ describe('testing payment service', function() {
     });
 
     it('should delete a payment', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const id = 2;
                 const result = yield paymentDataService.delete(id);
@@ -173,7 +179,7 @@ describe('testing payment service', function() {
     });
 
     it('should update a payment', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const id = 2;
                 var date = new Date();
@@ -192,9 +198,9 @@ describe('testing payment service', function() {
             };
         });
     });
-    
+
     it('should make payment for other activities', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 var data = {
                     month: 'n/a',
@@ -212,7 +218,7 @@ describe('testing payment service', function() {
     });
 
     it('should show payments for other activities', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const result = yield paymentDataService.showOtherPayments();
                 assert(result);
@@ -224,7 +230,7 @@ describe('testing payment service', function() {
     });
 
     it('should show payment for other activities to edit', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 var id = 1;
                 const result = yield paymentDataService.editOtherPayment(id);
@@ -237,13 +243,13 @@ describe('testing payment service', function() {
     });
 
     it('should update payment for other activities', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 var id = 1,
                     data = {
-                      amount: 11,
-                      payment_date: '2017-01-07',
-                      comments: 'n/a'
+                        amount: 11,
+                        payment_date: '2017-01-07',
+                        comments: 'n/a'
                     };
                 const result = yield paymentDataService.updateOtherPayment(data, id);
                 assert(result);
@@ -255,11 +261,80 @@ describe('testing payment service', function() {
     });
 
     it('should delete payment for other activities', function(done) {
-        co(function*() {
+        co(function * () {
             try {
                 const id = 1;
                 const result = yield paymentDataService.deleteOtherPayment(id);
                 assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+});
+
+describe('testing student service', function() {
+    it('should add a student', function(done) {
+        co(function * () {
+            try {
+                const data = {
+                    name: 'Student',
+                    surname: 'One'
+                };
+                const student = yield studentDataService.addStudent(data);
+                assert(student);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show students', function(done) {
+        co(function * () {
+            try {
+                const result = yield studentDataService.getStudents();
+                if (!result.length) {
+                    assert(result, 0);
+                } else {
+                    assert(result);
+                }
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+});
+
+describe('testing attendance service', function() {
+    it('should take attendance for day given', function(done) {
+        co(function * () {
+            try {
+                var d = new Date();
+                const data = {
+                    student_id: 1,
+                    lesson: d
+                };
+                const result = yield attendanceDataService.takeAttendance(data);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show attendance record', function(done) {
+        co(function * () {
+            try {
+                const result = yield attendanceDataService.getAttendance();
+                if (!result.length) {
+                    assert(result, 0);
+                } else {
+                    assert(result);
+                }
                 done();
             } catch (err) {
                 console.log(err);
