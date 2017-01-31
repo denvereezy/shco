@@ -306,19 +306,6 @@ describe('testing student service', function() {
             };
         });
     });
-
-    it('should delete a student', function(done) {
-        co(function * () {
-            try {
-                const id = 1;
-                const result = yield studentDataService.delete(id);
-                assert(result);
-                done();
-            } catch (err) {
-                console.log(err);
-            };
-        });
-    });
 });
 
 describe('testing attendance service', function() {
