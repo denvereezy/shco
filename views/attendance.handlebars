@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Take Attendance</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-inline" action="/attendance" method="post">
+            <div class="form-group">
+                <label for="name">Student</label>
+                <select class="form-control" name="student_id">
+                  {{#each students}}
+                  <option value="{{id}}">{{name}}</option>
+                  {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" class="form-control" id="lesson" name="lesson">
+            </div>
+            <button type="submit" class="btn btn-default form-control">Add</button>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="thead-inverse">
+            <th>Name</th>
+            <th>Date</th>
+            <th>Actions</th>
+            <tbody>
+              {{#each attendance}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{lesson}}</td>
+                        <td><a class="btn btn-warning" href="">Edit</a>
+                        </td>
+                        <td>
+                            <form class="" action="" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{/each}}
+            </tbody>
+        </thead>
+    </table>
+</div>
