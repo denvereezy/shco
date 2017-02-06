@@ -14,7 +14,7 @@
                 <th>Amount</th>
                 <th>Date paid</th>
                 <th>Payment status</th>
-                <th>Actions</th>
+                <th>&nbsp;</th>
                 <tbody>
                     {{#each result}}
                         <tr>
@@ -23,12 +23,21 @@
                             <td>R{{amount}}</td>
                             <td>{{payment_date}}</td>
                             <td>{{status}}</td>
-                            <td><a class="btn btn-warning" href="/edit/{{id}}">Edit</a>
-                            </td>
-                            <td>
-                                <form class="" action="/delete/{{id}}" method="post">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                            <td class="text-center">
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                      Actions <span class="caret"></span>
+                                  </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="btn btn-warning form-control" href="/edit/{{id}}">Edit</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>
+                                            <form class="" action="/delete/{{id}}" method="post">
+                                                <button type="submit" class="btn btn-danger form-control">Delete</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     {{/each}}
