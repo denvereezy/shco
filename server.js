@@ -14,12 +14,16 @@ const payments = require('./routes/payments');
 const router   = require('./routes/router');
 const teachers = require('./routes/teachers');
 const users    = require('./routes/users');
+const students = require('./routes/students');
+const attendance = require('./routes/attendance');
 
 const TeacherDataService = require('./data-services/teacherDataService');
 const QueryDataService   = require('./data-services/queryDataService');
 const LoginDataService   = require('./data-services/loginDataService');
 const PaymentDataService = require('./data-services/paymentDataService');
 const UserDataService    = require('./data-services/userDataService');
+const StudentDataService = require('./data-services/studentDataService');
+const AttendanceDataService = require('./data-services/attendanceDataService');
 
 const dbOptions = {
   host: 'localhost',
@@ -31,11 +35,13 @@ const dbOptions = {
 
 const serviceSetupCallBack = function (connection) {
   return {
-    queryDataService    : new QueryDataService(connection),
-    teacherDataService  : new TeacherDataService(connection),
-    loginDataService    : new LoginDataService(connection),
-    paymentDataService  : new PaymentDataService(connection),
-    userDataService     : new UserDataService(connection)
+    queryDataService      : new QueryDataService(connection),
+    teacherDataService    : new TeacherDataService(connection),
+    loginDataService      : new LoginDataService(connection),
+    paymentDataService    : new PaymentDataService(connection),
+    userDataService       : new UserDataService(connection),
+    studentDataService    : new StudentDataService(connection),
+    attendanceDataService : new AttendanceDataService(connection)
   }
 };
 
@@ -70,6 +76,11 @@ app.post('/add-payment', router.checkUser, payments.addOtherPayment);
 app.get('/edit/payment/:id', router.checkUser, payments.editOtherPayment);
 app.post('/update/payment/:id', router.checkUser, payments.updateOtherPayment);
 app.post('/delete/payment/:id', router.checkUser, payments.deleteOtherPayment);
+app.get('/attendance', router.checkUser, attendance.getAttendance);
+app.post('/attendance', attendance.takeAttendance);
+app.get('/students', router.checkUser, students.show);
+app.post('/student/add', router.checkUser, students.addStudent);
+app.post('/delete/student/:id', router.checkUser, students.delete);
 app.get('/logout', router.checkUser, router.checkUser, router.logout);
 
 
