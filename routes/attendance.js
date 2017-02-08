@@ -12,6 +12,7 @@ exports.takeAttendance = function(req, res, next) {
             const result = yield attendanceDataService.takeAttendance(data);
             res.redirect('attendance');
         } catch (err) {
+            req.flash('err', 'Error occurred');
             next(err);
         }
     });
@@ -31,10 +32,11 @@ exports.getAttendance = function(req, res, next) {
             res.render('attendance', {
                 students: result[0],
                 attendance: result[1],
-                user:user,
+                user: user,
                 layout: 'teachers'
             });
         } catch (err) {
+            req.flash('err', 'Error occurred');
             next(err);
         }
     });
