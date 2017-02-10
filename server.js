@@ -16,6 +16,7 @@ const teachers = require('./routes/teachers');
 const users    = require('./routes/users');
 const students = require('./routes/students');
 const attendance = require('./routes/attendance');
+const reset      = require('./routes/reset');
 
 const TeacherDataService = require('./data-services/teacherDataService');
 const QueryDataService   = require('./data-services/queryDataService');
