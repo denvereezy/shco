@@ -47,3 +47,9 @@ exports.logout = function(req, res, next) {
     delete req.session.user
     res.redirect("/");
 };
+
+exports.reset = function(req, res, next) {
+  res.render('forgotPassword',{
+    layout: false
+  });
+};
