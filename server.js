@@ -58,6 +58,8 @@ app.set('view engine', 'handlebars');
 
 app.get('/', router.login);
 app.post('/login', login.login);
+app.get('/password/reset', router.reset);
+app.post('/password/reset', reset.reset);
 app.use(router.checkUser);
 app.get('/home', router.checkUser, router.home);
 app.get('/make-payment', router.checkUser, payments.showAdd);
