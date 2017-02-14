@@ -9,22 +9,23 @@ const express      = require('express'),
       flash        = require('express-flash'),
       app          = express();
 
-const login    = require('./routes/login');
-const payments = require('./routes/payments');
-const router   = require('./routes/router');
-const teachers = require('./routes/teachers');
-const users    = require('./routes/users');
-const students = require('./routes/students');
+const login      = require('./routes/login');
+const payments   = require('./routes/payments');
+const router     = require('./routes/router');
+const teachers   = require('./routes/teachers');
+const users      = require('./routes/users');
+const students   = require('./routes/students');
 const attendance = require('./routes/attendance');
 const reset      = require('./routes/reset');
 
-const TeacherDataService = require('./data-services/teacherDataService');
-const QueryDataService   = require('./data-services/queryDataService');
-const LoginDataService   = require('./data-services/loginDataService');
-const PaymentDataService = require('./data-services/paymentDataService');
-const UserDataService    = require('./data-services/userDataService');
-const StudentDataService = require('./data-services/studentDataService');
+const TeacherDataService    = require('./data-services/teacherDataService');
+const QueryDataService      = require('./data-services/queryDataService');
+const LoginDataService      = require('./data-services/loginDataService');
+const PaymentDataService    = require('./data-services/paymentDataService');
+const UserDataService       = require('./data-services/userDataService');
+const StudentDataService    = require('./data-services/studentDataService');
 const AttendanceDataService = require('./data-services/attendanceDataService');
+const ResetDataService      = require('./data-services/resetDataService');
 
 const dbOptions = {
   host: 'localhost',
@@ -42,7 +43,8 @@ const serviceSetupCallBack = function (connection) {
     paymentDataService    : new PaymentDataService(connection),
     userDataService       : new UserDataService(connection),
     studentDataService    : new StudentDataService(connection),
-    attendanceDataService : new AttendanceDataService(connection)
+    attendanceDataService : new AttendanceDataService(connection),
+    resetDataService      : new ResetDataService(connection)
   }
 };
 
