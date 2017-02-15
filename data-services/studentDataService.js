@@ -11,7 +11,11 @@ module.exports = function(connection) {
     return queryDataService.executeQuery('insert into students set ?', data);
   };
 
-  this.delete = function(id) {
-    return queryDataService.executeQuery('delete from students where id = ?', id);
+  this.edit = function(id) {
+    return queryDataService.executeQuery('select * from students where id = ?', id);
+  };
+
+  this.update = function(data, id) {
+    return queryDataService.executeQuery('update students set ? where id = ?', [data, id]);
   };
 };
