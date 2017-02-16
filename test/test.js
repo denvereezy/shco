@@ -1,16 +1,14 @@
-const assert = require('assert'),
-    LoginDataService = require('../data-services/loginDataService'),
-    UserDataService = require('../data-services/userDataService'),
-    TeacherDataService = require('../data-services/teacherDataService'),
-    PaymentDataService = require('../data-services/paymentDataService'),
-    StudentDataService = require('../data-services/studentDataService'),
-    AttendanceDataService = require('../data-services/attendanceDataService'),
-    encryptonator = require('encryptonator'),
-    mysql = require('mysql'),
-    co = require('co'),
-    password = process.env.MYSQL_PWD !== null
-        ? process.env.MYSQL_PWD
-        : 'passw0rd';
+const assert                = require('assert'),
+      LoginDataService      = require('../data-services/loginDataService'),
+      UserDataService       = require('../data-services/userDataService'),
+      TeacherDataService    = require('../data-services/teacherDataService'),
+      PaymentDataService    = require('../data-services/paymentDataService'),
+      StudentDataService    = require('../data-services/studentDataService'),
+      AttendanceDataService = require('../data-services/attendanceDataService'),
+      encryptonator         = require('encryptonator'),
+      mysql                 = require('mysql'),
+      co                    = require('co'),
+      password              = process.env.MYSQL_PWD !== null ? process.env.MYSQL_PWD : 'passw0rd';
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -21,12 +19,12 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
-const teacherDataService  = new TeacherDataService(connection),
-    loginDataService      = new LoginDataService(connection),
-    userDataService       = new UserDataService(connection)
-    paymentDataService    = new PaymentDataService(connection),
-    studentDataService    = new StudentDataService(connection),
-    attendanceDataService = new AttendanceDataService(connection);
+const teacherDataService    = new TeacherDataService(connection),
+      loginDataService      = new LoginDataService(connection),
+      userDataService       = new UserDataService(connection)
+      paymentDataService    = new PaymentDataService(connection),
+      studentDataService    = new StudentDataService(connection),
+      attendanceDataService = new AttendanceDataService(connection);
 
 describe('testing auth service', function() {
     it('should add user to database', function(done) {
@@ -300,6 +298,36 @@ describe('testing student service', function() {
                 } else {
                     assert(result);
                 }
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should edit a student', function(done) {
+        co(function * () {
+            try {
+                var id = 1;
+                const result = yield studentDataService.edit(id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should update a student', function(done) {
+        co(function * () {
+            try {
+                var id = 1,
+                    data = {
+                        name: 'bobby',
+                        surname: 'brown'
+                    };
+                const result = yield studentDataService.update(data, id);
+                assert(result);
                 done();
             } catch (err) {
                 console.log(err);
