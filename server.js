@@ -85,7 +85,8 @@ app.get('/attendance', router.checkUser, attendance.getAttendance);
 app.post('/attendance', attendance.takeAttendance);
 app.get('/students', router.checkUser, students.show);
 app.post('/student/add', router.checkUser, students.addStudent);
-app.post('/delete/student/:id', router.checkUser, students.delete);
+app.get('/student/edit/:id', router.checkUser, students.edit);
+app.post('/student/update/:id', router.checkUser, students.update);
 app.get('/logout', router.checkUser, router.checkUser, router.logout);
 
 
