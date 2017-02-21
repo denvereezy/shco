@@ -12,7 +12,7 @@ exports.takeAttendance = function(req, res, next) {
             const result = yield attendanceDataService.takeAttendance(data);
             res.redirect('attendance');
         } catch (err) {
-            req.flash('err', 'Error occurred');
+            req.flash('alert', 'Error occurred');
             next(err);
         }
     });
@@ -36,7 +36,7 @@ exports.getAttendance = function(req, res, next) {
                 layout: 'teachers'
             });
         } catch (err) {
-            req.flash('err', 'Error occurred');
+            req.flash('alert', 'Error occurred');
             next(err);
         }
     });
