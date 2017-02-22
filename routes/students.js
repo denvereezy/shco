@@ -13,6 +13,7 @@ exports.show = function(req, res, next) {
                 layout: 'teachers'
             });
         } catch (err) {
+            req.flash('alert', 'Error occured');
             next(err);
         }
     });
