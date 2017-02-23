@@ -1,0 +1,18 @@
+{{#attendance}}
+    <form class="col-md-8" action="/update/attendance/{{id}}" method="post">
+        <div class="form-group">
+            <label>Student</label>
+            <select class="form-control" name="student_id">
+              {{#each ../students}}
+              <option value="{{id}}" selected="true">{{name}}</option>
+              {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Lesson</label>
+            <input class="form-control" type="date" name="lesson" value="{{lesson}}" required>
+        </div>
+        <button class="btn btn-default" onclick="goBack()">Cancel</button>
+        <input class="btn btn-success pull-right" type="submit" value="Update">
+    </form>
+{{/attendance}}
