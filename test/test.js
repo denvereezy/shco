@@ -369,4 +369,52 @@ describe('testing attendance service', function() {
             };
         });
     });
+
+    it('should edit attendance record', function(done) {
+        co(function * () {
+            try {
+              const id = 1;
+                const result = yield attendanceDataService.edit(id);
+                if (!result.length) {
+                    assert(result, 0);
+                } else {
+                    assert(result);
+                }
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should update attendance record', function(done) {
+        co(function * () {
+            try {
+              const id = 2,
+                    date = new Date(),
+                    data = {
+                    student_id: 2,
+                    lesson: date
+                      };
+              const result = yield attendanceDataService.update(data, id);
+              assert(result);
+              done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should delete attendance record', function(done) {
+        co(function * () {
+            try {
+              const id = 1;
+                const result = yield attendanceDataService.delete(id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
 });
