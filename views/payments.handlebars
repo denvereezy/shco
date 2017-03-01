@@ -7,7 +7,7 @@
     {{/if}}
     <a class="btn btn-success pull-right" href="/make-payment">make payment</a>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped" id="payments_table">
             <thead class="thead-inverse">
                 <th>Teacher</th>
                 <th>For month</th>
@@ -46,3 +46,8 @@
         </table>
     </div>
 {{/if}}
+<script type="text/javascript">
+    setInterval(function() {
+        $("#payments_table").load("/received-payments #payments_table");
+    }, 2000);
+</script>
