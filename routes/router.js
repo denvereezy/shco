@@ -7,16 +7,12 @@ exports.checkUser = function(req, res, next) {
 };
 
 exports.login = function(req, res, next) {
-    res.render('login', {
-        layout: false
-    });
+    res.render('login', {layout: false});
 };
 
 exports.makePayment = function(req, res, next) {
-  var user = req.session.user;
-    res.render('payments',{
-      user:user
-    });
+    var user = req.session.user;
+    res.render('payments', {user: user});
 };
 
 exports.home = function(req, res, next) {
@@ -25,22 +21,20 @@ exports.home = function(req, res, next) {
     if (teacher) {
         res.render('index', {
             data: 'Welcome back ' + user + '!',
-            user:user,
+            user: user,
             layout: 'teachers'
         });
     } else {
         res.render('index', {
             data: 'Welcome back ' + user + '!',
-            user:user
+            user: user
         });
     };
 };
 
 exports.add = function(req, res, next) {
-  var user = req.session.user;
-  res.render('addOtherPayment', {
-    user: user
-  });
+    var user = req.session.user;
+    res.render('addOtherPayment', {user: user});
 };
 
 exports.logout = function(req, res, next) {
@@ -49,7 +43,23 @@ exports.logout = function(req, res, next) {
 };
 
 exports.reset = function(req, res, next) {
-  res.render('forgotPassword',{
-    layout: false
-  });
+    res.render('forgotPassword', {layout: false});
+};
+
+exports.adminRoute = function(req, res, next) {
+    var admin = req.session.role === 'admin';
+    if (!admin) {
+        res.redirect('/home');
+    } else {
+        next();
+    }
+};
+
+exports.teacherRoute = function(req, res, next) {
+    var teacher = req.session.role === 'teacher';
+    if (!teacher) {
+        res.redirect('/home');
+    } else {
+        next();
+    }
 };
