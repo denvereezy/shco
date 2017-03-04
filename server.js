@@ -63,33 +63,38 @@ app.get('/', router.login);
 app.post('/login', login.login);
 app.get('/password/reset', router.reset);
 app.post('/password/reset', reset.reset);
+
 app.use(router.checkUser);
+
 app.get('/home', router.checkUser, router.home);
-app.get('/make-payment', router.checkUser, payments.showAdd);
-app.post('/create', router.checkUser, payments.addPayment);
-app.get('/payments', router.checkUser, payments.show);
-app.get('/edit/:id', router.checkUser, payments.edit);
-app.post('/payment/update/:id', router.checkUser, payments.update);
-app.post('/delete/:id', router.checkUser, payments.delete);
-app.get('/received-payments', router.checkUser, teachers.receivedPayments);
 app.get('/profile', router.checkUser, users.profile);
 app.post('/profile/update/:id', router.checkUser, users.update);
-app.post('/teacher-payment/update/:id', router.checkUser, teachers.acceptPayment);
-app.get('/extras', router.checkUser, payments.showOtherPayments);
-app.get('/add-payment', router.checkUser, router.add);
-app.post('/add-payment', router.checkUser, payments.addOtherPayment);
-app.get('/edit/payment/:id', router.checkUser, payments.editOtherPayment);
-app.post('/update/payment/:id', router.checkUser, payments.updateOtherPayment);
-app.post('/delete/payment/:id', router.checkUser, payments.deleteOtherPayment);
-app.get('/attendance', router.checkUser, attendance.getAttendance);
-app.post('/attendance', router.checkUser, attendance.takeAttendance);
-app.get('/addendance/edit/:id', router.checkUser, attendance.edit);
-app.post('/addendance/update/:id', router.checkUser, attendance.update);
-app.post('/addendance/delete/:id', router.checkUser, attendance.delete);
-app.get('/students', router.checkUser, students.show);
-app.post('/student/add', router.checkUser, students.addStudent);
-app.get('/student/edit/:id', router.checkUser, students.edit);
-app.post('/student/update/:id', router.checkUser, students.update);
+
+app.get('/make-payment', router.checkUser, router.adminRoute, payments.showAdd);
+app.post('/create', router.checkUser, router.adminRoute, payments.addPayment);
+app.get('/payments', router.checkUser, router.adminRoute, payments.show);
+app.get('/edit/:id', router.checkUser, router.adminRoute, payments.edit);
+app.post('/payment/update/:id', router.checkUser, router.adminRoute, payments.update);
+app.post('/delete/:id', router.checkUser, router.adminRoute, payments.delete);
+app.get('/add-payment', router.checkUser, router.adminRoute, router.add);
+app.post('/add-payment', router.checkUser, router.adminRoute, payments.addOtherPayment);
+app.get('/edit/payment/:id', router.checkUser, router.adminRoute, payments.editOtherPayment);
+app.post('/update/payment/:id', router.checkUser, router.adminRoute, payments.updateOtherPayment);
+app.post('/delete/payment/:id', router.checkUser, router.adminRoute, payments.deleteOtherPayment);
+app.get('/extras', router.checkUser, router.adminRoute, payments.showOtherPayments);
+
+app.get('/received-payments', router.checkUser, router.teacherRoute, teachers.receivedPayments);
+app.post('/teacher-payment/update/:id', router.checkUser, router.teacherRoute, teachers.acceptPayment);
+app.get('/attendance', router.checkUser, router.teacherRoute, attendance.getAttendance);
+app.post('/attendance', router.checkUser, router.teacherRoute, attendance.takeAttendance);
+app.get('/addendance/edit/:id', router.checkUser, router.teacherRoute, attendance.edit);
+app.post('/addendance/update/:id', router.checkUser, router.teacherRoute, attendance.update);
+app.post('/addendance/delete/:id', router.checkUser, router.teacherRoute, attendance.delete);
+app.get('/students', router.checkUser, router.teacherRoute, students.show);
+app.post('/student/add', router.checkUser, router.teacherRoute, students.addStudent);
+app.get('/student/edit/:id', router.checkUser, router.teacherRoute, students.edit);
+app.post('/student/update/:id', router.checkUser, router.teacherRoute, students.update);
+
 app.get('/logout', router.checkUser, router.checkUser, router.logout);
 
 
