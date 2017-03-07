@@ -22,6 +22,14 @@
                 <label for="date">Date:</label>
                 <input type="date" class="form-control" id="lesson" name="lesson">
             </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <select class="form-control" name="subject_id">
+                  {{#each subject}}
+                  <option value="{{id}}">{{subject}}</option>
+                  {{/each}}
+                </select>
+            </div>
             <button type="submit" class="btn btn-default form-control">Add</button>
         </form>
     </div>
@@ -38,6 +46,7 @@
                     <tr>
                         <td>{{name}}</td>
                         <td>{{lesson}}</td>
+                        <td>{{subject}}</td>
                         <td><a class="btn btn-warning" href="/addendance/edit/{{id}}">Edit</a>
                         </td>
                         <td>
