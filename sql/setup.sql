@@ -43,9 +43,16 @@ create table students (
   surname varchar(25) not null
 );
 
+create table subjects (
+  id int not null primary key auto_increment,
+  subject varchar(100)
+);
+
 create table attendance (
   id int not null primary key auto_increment,
   student_id int not null,
   lesson date not null,
+  subject_id int not null,
+  foreign key(subject_id) references subjects(id),
   foreign key(student_id) references students(id)
 );
