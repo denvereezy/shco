@@ -5,7 +5,8 @@ exports.takeAttendance = function(req, res, next) {
         try {
             var data = {
                 student_id: req.body.student_id,
-                lesson: req.body.lesson
+                lesson: req.body.lesson,
+                subject_id: req.body.subject_id
             };
             const services = yield req.getServices();
             const attendanceDataService = services.attendanceDataService;
@@ -25,13 +26,16 @@ exports.getAttendance = function(req, res, next) {
             const services = yield req.getServices();
             const attendanceDataService = services.attendanceDataService;
             const studentDataService = services.studentDataService;
+            const subjectDataService = services.subjectDataService;
             const students = studentDataService.getStudents();
             const attendance = attendanceDataService.getAttendance();
+            const subjects = subjectDataService.show();
             const result = yield[students,
-                attendance];
+                attendance, subjects];
             res.render('attendance', {
                 students: result[0],
                 attendance: result[1],
+                subject: result[2],
                 user: user,
                 layout: 'teachers'
             });
