@@ -5,6 +5,7 @@ const assert                = require('assert'),
       PaymentDataService    = require('../data-services/paymentDataService'),
       StudentDataService    = require('../data-services/studentDataService'),
       AttendanceDataService = require('../data-services/attendanceDataService'),
+      SubjectDataService    = require('../data-services/subjectDataService'),
       encryptonator         = require('encryptonator'),
       mysql                 = require('mysql'),
       co                    = require('co'),
@@ -12,8 +13,8 @@ const assert                = require('assert'),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: process.env.MYSQL_USER || 'root',
-    password: password,
+    user: process.env.MYSQL_USER || 'user',
+    password: 'password',
     port: 3306,
     database: 'testDB'
 });
@@ -24,7 +25,8 @@ const teacherDataService    = new TeacherDataService(connection),
       userDataService       = new UserDataService(connection)
       paymentDataService    = new PaymentDataService(connection),
       studentDataService    = new StudentDataService(connection),
-      attendanceDataService = new AttendanceDataService(connection);
+      attendanceDataService = new AttendanceDataService(connection),
+      subjectDataService    = new SubjectDataService(connection);
 
 describe('testing auth service', function() {
     it('should add user to database', function(done) {
@@ -336,6 +338,68 @@ describe('testing student service', function() {
     });
 });
 
+describe('testing subject service', function() {
+    it('should add a subject', function(done) {
+        co(function * () {
+            try {
+                const subject = {
+                    subject: 'guitar'
+                };
+                const result = yield subjectDataService.add(subject);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show subjects', function(done) {
+        co(function * () {
+            try {
+                const subjects = yield subjectDataService.show();
+                if (!subjects.length) {
+                    assert(subjects, 0);
+                } else {
+                    assert(subjects);
+                }
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show subject for id given', function(done) {
+        co(function * () {
+            try {
+                const id = 1;
+                const result = yield subjectDataService.edit(id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should update a subject', function(done) {
+        co(function * () {
+          try {
+              const id = 1;
+              const data = {
+                subject: 'guitar theory'
+              };
+              const result = yield subjectDataService.update(data, id);
+              assert(result);
+              done();
+          } catch (err) {
+            console.log(err);
+          };
+      });
+  });
+});
+
 describe('testing attendance service', function() {
     it('should take attendance for day given', function(done) {
         co(function * () {
@@ -343,7 +407,8 @@ describe('testing attendance service', function() {
                 var d = new Date();
                 const data = {
                     student_id: 1,
-                    lesson: d
+                    lesson: d,
+                    subject_id: 1
                 };
                 const result = yield attendanceDataService.takeAttendance(data);
                 assert(result);
@@ -373,7 +438,7 @@ describe('testing attendance service', function() {
     it('should edit attendance record', function(done) {
         co(function * () {
             try {
-              const id = 1;
+                const id = 1;
                 const result = yield attendanceDataService.edit(id);
                 if (!result.length) {
                     assert(result, 0);
@@ -390,15 +455,16 @@ describe('testing attendance service', function() {
     it('should update attendance record', function(done) {
         co(function * () {
             try {
-              const id = 2,
+                const id = 2,
                     date = new Date(),
                     data = {
-                    student_id: 2,
-                    lesson: date
-                      };
-              const result = yield attendanceDataService.update(data, id);
-              assert(result);
-              done();
+                        student_id: 2,
+                        lesson: date,
+                        subject_id: 1
+                    };
+                const result = yield attendanceDataService.update(data, id);
+                assert(result);
+                done();
             } catch (err) {
                 console.log(err);
             };
@@ -408,7 +474,7 @@ describe('testing attendance service', function() {
     it('should delete attendance record', function(done) {
         co(function * () {
             try {
-              const id = 1;
+                const id = 1;
                 const result = yield attendanceDataService.delete(id);
                 assert(result);
                 done();
