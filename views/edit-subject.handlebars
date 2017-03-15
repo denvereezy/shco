@@ -1,0 +1,10 @@
+{{#subject}}
+    <form class="col-md-8" action="/subject/update/{{id}}" method="post">
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input class="form-control" type="text" name="subject" value="{{subject}}" id="subject">
+        </div>
+        <input class="btn btn-primary pull-right" type="submit" name="" value="Update">
+        <input class="btn btn-default" type="button" value="Cancel" onclick="goBack()">
+    </form>
+{{/subject}}
