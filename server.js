@@ -17,6 +17,7 @@ const users      = require('./routes/users');
 const students   = require('./routes/students');
 const attendance = require('./routes/attendance');
 const reset      = require('./routes/reset');
+const subjects   = require('./routes/subjects');
 
 const TeacherDataService    = require('./data-services/teacherDataService');
 const QueryDataService      = require('./data-services/queryDataService');
@@ -26,6 +27,7 @@ const UserDataService       = require('./data-services/userDataService');
 const StudentDataService    = require('./data-services/studentDataService');
 const AttendanceDataService = require('./data-services/attendanceDataService');
 const ResetDataService      = require('./data-services/resetDataService');
+const SubjectDataService    = require('./data-services/subjectDataService');
 
 const dbOptions = {
   host: 'localhost',
@@ -44,7 +46,8 @@ const serviceSetupCallBack = function (connection) {
     userDataService       : new UserDataService(connection),
     studentDataService    : new StudentDataService(connection),
     attendanceDataService : new AttendanceDataService(connection),
-    resetDataService      : new ResetDataService(connection)
+    resetDataService      : new ResetDataService(connection),
+    subjectDataService    : new SubjectDataService(connection)
   }
 };
 
@@ -94,6 +97,10 @@ app.get('/students', router.checkUser, router.teacherRoute, students.show);
 app.post('/student/add', router.checkUser, router.teacherRoute, students.addStudent);
 app.get('/student/edit/:id', router.checkUser, router.teacherRoute, students.edit);
 app.post('/student/update/:id', router.checkUser, router.teacherRoute, students.update);
+app.get('/subjects', router.checkUser, router.teacherRoute, subjects.show);
+app.post('/subject/add', router.checkUser, router.teacherRoute, subjects.add);
+app.get('/subject/edit/:id', router.checkUser, router.teacherRoute, subjects.edit);
+app.post('/subject/update/:id', router.checkUser, router.teacherRoute, subjects.update);
 
 app.get('/logout', router.checkUser, router.checkUser, router.logout);
 
