@@ -11,8 +11,8 @@ module.exports = function(connection){
     return queryDataService.executeQuery(`select * from ${tableName}`);
   };
 
-  this.update = function(tableName, id){
-    return queryDataService.executeQuery(`update ${tableName} where id = ${id}`);
+  this.update = function(tableName, data, id){
+    return queryDataService.executeQuery(`update ${tableName} set ${data} where id = ${id}`);
   };
 
   this.delete = function(tableName, id){
