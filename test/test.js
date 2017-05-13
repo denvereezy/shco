@@ -6,6 +6,7 @@ const assert                = require('assert'),
       StudentDataService    = require('../data-services/studentDataService'),
       AttendanceDataService = require('../data-services/attendanceDataService'),
       SubjectDataService    = require('../data-services/subjectDataService'),
+      GeneralDataService    = require('../data-services/generalDataService'),
       encryptonator         = require('encryptonator'),
       mysql                 = require('mysql'),
       co                    = require('co'),
@@ -26,7 +27,8 @@ const teacherDataService    = new TeacherDataService(connection),
       paymentDataService    = new PaymentDataService(connection),
       studentDataService    = new StudentDataService(connection),
       attendanceDataService = new AttendanceDataService(connection),
-      subjectDataService    = new SubjectDataService(connection);
+      subjectDataService    = new SubjectDataService(connection),
+      generalDataService    = new GeneralDataService(connection);
 
 describe('testing auth service', function() {
     it('should add user to database', function(done) {
@@ -39,7 +41,7 @@ describe('testing auth service', function() {
                 };
                 const hash = yield encryptonator.encryptPassword('1234');
                 data.password = hash;
-                const user = yield userDataService.add(data);
+                const user = yield generalDataService.insert('users', data);
                 assert(user);
                 done();
             } catch (err) {
@@ -63,7 +65,7 @@ describe('testing auth service', function() {
                 if (result) {
                     assert(result, 'True');
                 } else {
-                    const user = yield userDataService.add(data);
+                    const user = yield generalDataService.insert('users', data);
                     assert(user);
                 }
                 done();
@@ -99,7 +101,7 @@ describe('testing auth service', function() {
             try {
                 const id = 1;
                 const password = yield encryptonator.encryptPassword('123456');
-                const result = yield userDataService.update(password, id);
+                const result = yield generalDataService.update('users', password, id);
                 assert(result);
                 done();
             } catch (err) {
@@ -117,7 +119,7 @@ describe('testing teacher service', function() {
                     name: 'Denver',
                     surname: 'Daniels'
                 };
-                const teacher = yield teacherDataService.add(data);
+                const teacher = yield generalDataService.insert('teachers', data);
                 assert(teacher);
                 done();
             } catch (err) {
@@ -139,7 +141,7 @@ describe('testing payment service', function() {
                     teacher_id: 1,
                     status: 'pending'
                 };
-                const payment = yield paymentDataService.create(data);
+                const payment = yield generalDataService.insert('payments', data);
                 assert(payment);
                 done();
             } catch (err) {
@@ -152,7 +154,7 @@ describe('testing payment service', function() {
         co(function * () {
             try {
                 const teacherId = 1;
-                const result = yield paymentDataService.showPayment(teacherId);
+                const result = yield generalDataService.select('payments', teacherId);
                 if (result) {
                     assert(result, 'True');
                 } else {
@@ -169,7 +171,7 @@ describe('testing payment service', function() {
         co(function * () {
             try {
                 const id = 2;
-                const result = yield paymentDataService.delete(id);
+                const result = yield generalDataService.delete('payments', id);
                 assert(result);
                 done();
             } catch (err) {
@@ -190,7 +192,7 @@ describe('testing payment service', function() {
                     teacher_id: 1,
                     status: 'confirmed'
                 }
-                const result = yield paymentDataService.update(data, id);
+                const result = yield generalDataService.update('payments', data, id);
                 assert(result);
                 done();
             } catch (err) {
@@ -208,7 +210,7 @@ describe('testing payment service', function() {
                     amount: 7000,
                     comments: 'got new amps'
                 };
-                const result = yield paymentDataService.otherPayments(data);
+                const result = yield generalDataService.insert('extras', data);
                 assert(result);
                 done();
             } catch (err) {
@@ -220,7 +222,7 @@ describe('testing payment service', function() {
     it('should show payments for other activities', function(done) {
         co(function * () {
             try {
-                const result = yield paymentDataService.showOtherPayments();
+                const result = yield generalDataService.select('extras');
                 assert(result);
                 done();
             } catch (err) {
@@ -233,7 +235,7 @@ describe('testing payment service', function() {
         co(function * () {
             try {
                 var id = 1;
-                const result = yield paymentDataService.editOtherPayment(id);
+                const result = yield generalDataService.edit('extras', id);
                 assert(result);
                 done();
             } catch (err) {
@@ -251,7 +253,7 @@ describe('testing payment service', function() {
                         payment_date: '2017-01-07',
                         comments: 'n/a'
                     };
-                const result = yield paymentDataService.updateOtherPayment(data, id);
+                const result = yield generalDataService.update('extras', data, id);
                 assert(result);
                 done();
             } catch (err) {
@@ -264,7 +266,7 @@ describe('testing payment service', function() {
         co(function * () {
             try {
                 const id = 1;
-                const result = yield paymentDataService.deleteOtherPayment(id);
+                const result = yield generalDataService.delete('extras', id);
                 assert(result);
                 done();
             } catch (err) {
@@ -282,7 +284,7 @@ describe('testing student service', function() {
                     name: 'Student',
                     surname: 'One'
                 };
-                const student = yield studentDataService.addStudent(data);
+                const student = yield generalDataService.insert('students', data);
                 assert(student);
                 done();
             } catch (err) {
@@ -294,7 +296,7 @@ describe('testing student service', function() {
     it('should show students', function(done) {
         co(function * () {
             try {
-                const result = yield studentDataService.getStudents();
+                const result = yield generalDataService.select('students');
                 if (!result.length) {
                     assert(result, 0);
                 } else {
@@ -311,7 +313,7 @@ describe('testing student service', function() {
         co(function * () {
             try {
                 var id = 1;
-                const result = yield studentDataService.edit(id);
+                const result = yield generalDataService.edit('students', id);
                 assert(result);
                 done();
             } catch (err) {
@@ -328,7 +330,7 @@ describe('testing student service', function() {
                         name: 'bobby',
                         surname: 'brown'
                     };
-                const result = yield studentDataService.update(data, id);
+                const result = yield generalDataService.update('students', data, id);
                 assert(result);
                 done();
             } catch (err) {
@@ -345,7 +347,7 @@ describe('testing subject service', function() {
                 const subject = {
                     subject: 'guitar'
                 };
-                const result = yield subjectDataService.add(subject);
+                const result = yield generalDataService.insert('subject', subject);
                 assert(result);
                 done();
             } catch (err) {
@@ -357,7 +359,7 @@ describe('testing subject service', function() {
     it('should show subjects', function(done) {
         co(function * () {
             try {
-                const subjects = yield subjectDataService.show();
+                const subjects = yield generalDataService.select('subjects');
                 if (!subjects.length) {
                     assert(subjects, 0);
                 } else {
@@ -374,7 +376,7 @@ describe('testing subject service', function() {
         co(function * () {
             try {
                 const id = 1;
-                const result = yield subjectDataService.edit(id);
+                const result = yield generalDataService.edit('subjects', id);
                 assert(result);
                 done();
             } catch (err) {
@@ -390,7 +392,7 @@ describe('testing subject service', function() {
               const data = {
                 subject: 'guitar theory'
               };
-              const result = yield subjectDataService.update(data, id);
+              const result = yield generalDataService.update('subjects', data, id);
               assert(result);
               done();
           } catch (err) {
@@ -410,7 +412,7 @@ describe('testing attendance service', function() {
                     lesson: d,
                     subject_id: 1
                 };
-                const result = yield attendanceDataService.takeAttendance(data);
+                const result = yield generalDataService.insert('attendance', data);
                 assert(result);
                 done();
             } catch (err) {
@@ -439,7 +441,7 @@ describe('testing attendance service', function() {
         co(function * () {
             try {
                 const id = 1;
-                const result = yield attendanceDataService.edit(id);
+                const result = yield generalDataService.edit('attendance', id);
                 if (!result.length) {
                     assert(result, 0);
                 } else {
@@ -462,7 +464,7 @@ describe('testing attendance service', function() {
                         lesson: date,
                         subject_id: 1
                     };
-                const result = yield attendanceDataService.update(data, id);
+                const result = yield generalDataService.update('attendance', data, id);
                 assert(result);
                 done();
             } catch (err) {
@@ -475,7 +477,7 @@ describe('testing attendance service', function() {
         co(function * () {
             try {
                 const id = 1;
-                const result = yield attendanceDataService.delete(id);
+                const result = yield generalDataService.delete('attendance', id);
                 assert(result);
                 done();
             } catch (err) {
