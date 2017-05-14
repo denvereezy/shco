@@ -4,7 +4,7 @@ module.exports = function(connection){
   const queryDataService = new QueryService(connection);
 
   this.insert = function(tableName, data){
-    return queryDataService.executeQuery(`insert into ${tableName} set ${data}`);
+    return queryDataService.executeQuery(`insert into ${tableName} set ?`, data);
   };
 
   this.select = function(tableName){
@@ -12,7 +12,7 @@ module.exports = function(connection){
   };
 
   this.update = function(tableName, data, id){
-    return queryDataService.executeQuery(`update ${tableName} set ${data} where id = ${id}`);
+    return queryDataService.executeQuery(`update ${tableName} set ? where id = ${id}`, data);
   };
 
   this.delete = function(tableName, id){
