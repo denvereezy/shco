@@ -101,7 +101,7 @@ describe('testing auth service', function() {
             try {
                 const id = 1;
                 const password = yield encryptonator.encryptPassword('123456');
-                const result = yield generalDataService.update('users', password, id);
+                const result = yield userDataService.update('users', password, id);
                 assert(result);
                 done();
             } catch (err) {
@@ -347,7 +347,7 @@ describe('testing subject service', function() {
                 const subject = {
                     subject: 'guitar'
                 };
-                const result = yield generalDataService.insert('subject', subject);
+                const result = yield generalDataService.insert('subjects', subject);
                 assert(result);
                 done();
             } catch (err) {
