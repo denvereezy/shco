@@ -28,6 +28,7 @@ const StudentDataService    = require('./data-services/studentDataService');
 const AttendanceDataService = require('./data-services/attendanceDataService');
 const ResetDataService      = require('./data-services/resetDataService');
 const SubjectDataService    = require('./data-services/subjectDataService');
+const GeneralDataService    = require('./data-services/generalDataService');
 
 const dbOptions = {
   host: 'localhost',
@@ -47,7 +48,8 @@ const serviceSetupCallBack = function (connection) {
     studentDataService    : new StudentDataService(connection),
     attendanceDataService : new AttendanceDataService(connection),
     resetDataService      : new ResetDataService(connection),
-    subjectDataService    : new SubjectDataService(connection)
+    subjectDataService    : new SubjectDataService(connection),
+    generalDataService    : new GeneralDataService(connection)
   }
 };
 
