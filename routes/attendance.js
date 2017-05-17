@@ -9,8 +9,8 @@ exports.takeAttendance = function(req, res, next) {
                 subject_id: req.body.subject_id
             };
             const services = yield req.getServices();
-            const attendanceDataService = services.attendanceDataService;
-            const result = yield attendanceDataService.takeAttendance(data);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.insert('attendance', data);
             res.redirect('attendance');
         } catch (err) {
             req.flash('alert', 'Error occurred');
@@ -24,12 +24,11 @@ exports.getAttendance = function(req, res, next) {
         try {
             var user = req.session.user;
             const services = yield req.getServices();
+            const generalDataService = services.generalDataService;
             const attendanceDataService = services.attendanceDataService;
-            const studentDataService = services.studentDataService;
-            const subjectDataService = services.subjectDataService;
-            const students = studentDataService.getStudents();
+            const students = generalDataService.select('students');
             const attendance = attendanceDataService.getAttendance();
-            const subjects = subjectDataService.show();
+            const subjects = generalDataService.select('subjects');
             const result = yield[students,
                 attendance, subjects];
             res.render('attendance', {
@@ -52,10 +51,9 @@ exports.edit = function(req, res, next) {
             var user = req.session.user,
                 id = req.params.id;
             const services = yield req.getServices();
-            const attendanceDataService = services.attendanceDataService;
-            const studentDataService = services.studentDataService;
-            const students = studentDataService.getStudents();
-            const attendance = attendanceDataService.edit(id);
+            const generalDataService = services.generalDataService;
+            const students = generalDataService.select('students');
+            const attendance = generalDataService.edit('attendance', id);
             const result = yield[students,
                 attendance];
             res.render('edit-attendance', {
@@ -81,8 +79,8 @@ exports.update = function(req, res, next) {
                     lesson: req.body.lesson
                 };
             const services = yield req.getServices();
-            const attendanceDataService = services.attendanceDataService;
-            const result = attendanceDataService.update(data, id);
+            const generalDataService = services.generalDataService;
+            const result = generalDataService.update('attendance', data, id);
             req.flash('success', 'Record updated');
             res.redirect('/attendance');
         } catch (err) {
@@ -99,8 +97,8 @@ exports.delete = function(req, res, next) {
             var user = req.session.user,
                 id = req.params.id;
             const services = yield req.getServices();
-            const attendanceDataService = services.attendanceDataService;
-            const result = attendanceDataService.delete(id);
+            const generalDataService = services.generalDataService;
+            const result = generalDataService.delete('attendance', id);
             req.flash('success', 'Record deleted');
             res.redirect('/attendance');
         } catch (err) {
