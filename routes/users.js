@@ -17,8 +17,8 @@ exports.profile = function(req, res, next) {
                     break;
             };
             const services = yield req.getServices();
-            const userDataService = services.userDataService;
-            const result = yield userDataService.profile(user_id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.edit('users', user_id);
             res.render('profile', {
                 data: result,
                 user: user,

@@ -5,8 +5,8 @@ exports.add = function(req, res, next) {
         try {
             var subject = req.body.subject;
             const services = yield req.getServices();
-            const subjectDataService = services.subjectDataService;
-            const result = yield subjectDataService.add(subject);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.add('subjects', subject);
             req.flash('success', 'subject added');
             res.redrect('/subjects');
         } catch (err) {
@@ -22,8 +22,8 @@ exports.show = function(req, res, next) {
         try {
             var user = req.session.user;
             const services = yield req.getServices();
-            const subjectDataService = services.subjectDataService;
-            const result = yield subjectDataService.show();
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.select('subjects');
             res.render('subjects', {
                 layout: 'teachers',
                 subject: result,
@@ -43,8 +43,8 @@ exports.edit = function(req, res, next) {
             var user = req.session.user;
             var id = req.params.id;
             const services = yield req.getServices();
-            const subjectDataService = services.subjectDataService;
-            const subject = yield subjectDataService.edit(id);
+            const generalDataService = services.generalDataService;
+            const subject = yield generalDataService.edit('subjects', id);
             res.render('edit-subject', {
                 user: user,
                 layout: 'teachers',
@@ -66,8 +66,8 @@ exports.update = function(req, res, next) {
                 subject: req.body.subject
             };
             const services = yield req.getServices();
-            const subjectDataService = services.subjectDataService;
-            const result = yield subjectDataService.update(data, id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.update('subjects', data, id);
             res.redirect('/subjects');
         } catch (err) {
             req.flash('error', 'error');

@@ -52,8 +52,8 @@ exports.addPayment = function(req, res, next) {
             };
 
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.create(data);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.insert('payments', data);
             req.flash('success', 'Payment made');
             res.redirect('/payments');
         } catch (err) {
@@ -70,8 +70,8 @@ exports.edit = function(req, res, next) {
             var user = req.session.user;
             var id = req.params.id;
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.edit(id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.edit('payments', id);
             res.render('edit', {
                 data: result,
                 user: user
@@ -96,8 +96,8 @@ exports.update = function(req, res, next) {
                 status: req.body.status
             };
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.update(data, id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.update('payments', data, id);
             req.flash('success', 'Update successful');
             res.redirect('/payments');
         } catch (err) {
@@ -113,8 +113,8 @@ exports.delete = function(req, res, next) {
         try {
             var id = req.params.id;
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.delete(id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.delete('payments', id);
             req.flash('success', 'Delete successful');
             res.redirect('/payments');
         } catch (err) {
@@ -135,8 +135,8 @@ exports.addOtherPayment = function(req, res, next) {
                 comments: req.body.comments
             };
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.otherPayments(data);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.insert('extras', data);
             req.flash('success', 'Payment made');
             res.redirect('/extras');
         } catch (err) {
@@ -200,8 +200,8 @@ exports.updateOtherPayment = function(req, res, next) {
                 comments: req.body.comments
             };
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.updateOtherPayment(data, id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.update('extras', data, id);
             req.flash('success', 'Update successful');
             res.redirect('/extras');
         } catch (err) {
@@ -217,8 +217,8 @@ exports.deleteOtherPayment = function(req, res, next) {
         try {
             var id = req.params.id;
             const services = yield req.getServices();
-            const paymentDataService = services.paymentDataService;
-            const result = yield paymentDataService.deleteOtherPayment(id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.delete('extras', id);
             req.flash('success', 'Delete successful');
             res.redirect('/extras');
         } catch (err) {

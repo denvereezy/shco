@@ -5,8 +5,8 @@ exports.show = function(req, res, next) {
         try {
             var user = req.session.user;
             const services = yield req.getServices();
-            const studentDataService = services.studentDataService;
-            const result = yield studentDataService.getStudents();
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.select('students');
             res.render('students', {
                 students: result,
                 user: user,
@@ -27,8 +27,8 @@ exports.addStudent = function(req, res, next) {
                 surname: req.body.surname
             };
             const services = yield req.getServices();
-            const studentDataService = services.studentDataService;
-            const result = yield studentDataService.addStudent(data);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.insert('students', data);
             req.flash('success', 'Student added');
             res.redirect('/students');
         } catch (err) {
@@ -46,8 +46,8 @@ exports.edit = function(req, res, next) {
                 user = req.session.user;
 
             const services = yield req.getServices();
-            const studentDataService = services.studentDataService;
-            const result = yield studentDataService.edit(id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.edit('students', id);
             res.render('edit-student', {
                 student: result,
                 layout: 'teachers',
@@ -71,8 +71,8 @@ exports.update = function(req, res, next) {
                 };
 
             const services = yield req.getServices();
-            const studentDataService = services.studentDataService;
-            const result = yield studentDataService.update(data, id);
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.update('subjects', data, id);
             req.flash('success', 'Student updated');
             res.redirect('/students');
         } catch (err) {
