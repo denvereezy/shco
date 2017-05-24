@@ -5,7 +5,6 @@ const assert                = require('assert'),
       PaymentDataService    = require('../data-services/paymentDataService'),
       StudentDataService    = require('../data-services/studentDataService'),
       AttendanceDataService = require('../data-services/attendanceDataService'),
-      SubjectDataService    = require('../data-services/subjectDataService'),
       GeneralDataService    = require('../data-services/generalDataService'),
       encryptonator         = require('encryptonator'),
       mysql                 = require('mysql'),
@@ -27,7 +26,6 @@ const teacherDataService    = new TeacherDataService(connection),
       paymentDataService    = new PaymentDataService(connection),
       studentDataService    = new StudentDataService(connection),
       attendanceDataService = new AttendanceDataService(connection),
-      subjectDataService    = new SubjectDataService(connection),
       generalDataService    = new GeneralDataService(connection);
 
 describe('testing auth service', function() {
