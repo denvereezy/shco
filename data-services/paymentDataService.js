@@ -3,9 +3,6 @@ const QueryDataService = require('./queryDataService');
 module.exports = function(connection) {
     const queryDataService = new QueryDataService(connection);
 
-    this.create = function(data) {
-        return queryDataService.executeQuery('insert into payments set ?', data);
-    };
 
     this.showPayment = function(id) {
         return queryDataService.executeQuery('select * from payments where teacher_id = ?', id);
@@ -29,33 +26,13 @@ module.exports = function(connection) {
         return queryDataService.executeQuery('select id as teacher_id, name from teachers');
     };
 
-    this.update = function(data, id) {
-        return queryDataService.executeQuery('update payments set ? where payments.id = ?', [data, id]);
-    };
-
-    this.delete = function(id) {
-        return queryDataService.executeQuery('delete from payments where id = ?', id);
-    };
-
     this.showOtherPayments = function() {
         return queryDataService.executeQuery(`select id, DATE_FORMAT(payment_date,"%d %b %y") as payment_date,
                                                 amount, comments from extras`);
     };
 
-    this.otherPayments = function(data) {
-        return queryDataService.executeQuery('insert into extras set ?', data);
-    };
-
     this.editOtherPayment = function(id) {
         return queryDataService.executeQuery(`select id, DATE_FORMAT(payment_date, "%Y-%m-%d") as payment_date,
                                                 amount, comments from extras where id = ?`, id);
-    };
-
-    this.updateOtherPayment = function(data, id) {
-        return queryDataService.executeQuery('update extras set ? where id = ?', [data, id]);
-    };
-
-    this.deleteOtherPayment = function(id) {
-        return queryDataService.executeQuery('delete from extras where id = ?', id);
     };
 };

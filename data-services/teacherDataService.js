@@ -3,10 +3,6 @@ const QueryDataService = require('./queryDataService');
 module.exports = function(connection) {
     const queryDataService = new QueryDataService(connection);
 
-    this.add = function(data) {
-        return queryDataService.executeQuery('insert into teachers set ?', data);
-    };
-
     this.receivedPayments = function(identifier) {
         return queryDataService.executeQuery(`select payments.id,
                                               month, DATE_FORMAT(payment_date,"%d %b %y") as payment_date,
