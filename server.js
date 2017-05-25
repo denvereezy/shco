@@ -27,7 +27,6 @@ const UserDataService       = require('./data-services/userDataService');
 const StudentDataService    = require('./data-services/studentDataService');
 const AttendanceDataService = require('./data-services/attendanceDataService');
 const ResetDataService      = require('./data-services/resetDataService');
-const SubjectDataService    = require('./data-services/subjectDataService');
 const GeneralDataService    = require('./data-services/generalDataService');
 
 const dbOptions = {
@@ -48,7 +47,6 @@ const serviceSetupCallBack = function (connection) {
     studentDataService    : new StudentDataService(connection),
     attendanceDataService : new AttendanceDataService(connection),
     resetDataService      : new ResetDataService(connection),
-    subjectDataService    : new SubjectDataService(connection),
     generalDataService    : new GeneralDataService(connection)
   }
 };
@@ -64,47 +62,47 @@ app.use(flash());
 app.engine('handlebars', exhbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
 
-app.get('/', router.login);
-app.post('/login', login.login);
-app.get('/password/reset', router.reset);
+app.get('/',                router.login);
+app.post('/login',          login.login);
+app.get('/password/reset',  router.reset);
 app.post('/password/reset', reset.reset);
 
 app.use(router.checkUser);
 
-app.get('/home', router.checkUser, router.home);
-app.get('/profile', router.checkUser, users.profile);
+app.get('/home',                router.checkUser, router.home);
+app.get('/profile',             router.checkUser, users.profile);
 app.post('/profile/update/:id', router.checkUser, users.update);
 
-app.get('/make-payment', router.checkUser, router.adminRoute, payments.showAdd);
-app.post('/create', router.checkUser, router.adminRoute, payments.addPayment);
-app.get('/payments', router.checkUser, router.adminRoute, payments.show);
-app.get('/edit/:id', router.checkUser, router.adminRoute, payments.edit);
+app.get('/make-payment',        router.checkUser, router.adminRoute, payments.showAdd);
+app.post('/create',             router.checkUser, router.adminRoute, payments.addPayment);
+app.get('/payments',            router.checkUser, router.adminRoute, payments.show);
+app.get('/edit/:id',            router.checkUser, router.adminRoute, payments.edit);
 app.post('/payment/update/:id', router.checkUser, router.adminRoute, payments.update);
-app.post('/delete/:id', router.checkUser, router.adminRoute, payments.delete);
-app.get('/add-payment', router.checkUser, router.adminRoute, router.add);
-app.post('/add-payment', router.checkUser, router.adminRoute, payments.addOtherPayment);
-app.get('/edit/payment/:id', router.checkUser, router.adminRoute, payments.editOtherPayment);
+app.post('/delete/:id',         router.checkUser, router.adminRoute, payments.delete);
+app.get('/add-payment',         router.checkUser, router.adminRoute, router.add);
+app.post('/add-payment',        router.checkUser, router.adminRoute, payments.addOtherPayment);
+app.get('/edit/payment/:id',    router.checkUser, router.adminRoute, payments.editOtherPayment);
 app.post('/update/payment/:id', router.checkUser, router.adminRoute, payments.updateOtherPayment);
 app.post('/delete/payment/:id', router.checkUser, router.adminRoute, payments.deleteOtherPayment);
-app.get('/extras', router.checkUser, router.adminRoute, payments.showOtherPayments);
+app.get('/extras',              router.checkUser, router.adminRoute, payments.showOtherPayments);
 
-app.get('/received-payments', router.checkUser, router.teacherRoute, teachers.receivedPayments);
+app.get('/received-payments',           router.checkUser, router.teacherRoute, teachers.receivedPayments);
 app.post('/teacher-payment/update/:id', router.checkUser, router.teacherRoute, teachers.acceptPayment);
-app.get('/attendance', router.checkUser, router.teacherRoute, attendance.getAttendance);
-app.post('/attendance', router.checkUser, router.teacherRoute, attendance.takeAttendance);
-app.get('/addendance/edit/:id', router.checkUser, router.teacherRoute, attendance.edit);
-app.post('/addendance/update/:id', router.checkUser, router.teacherRoute, attendance.update);
-app.post('/addendance/delete/:id', router.checkUser, router.teacherRoute, attendance.delete);
-app.get('/students', router.checkUser, router.teacherRoute, students.show);
-app.post('/student/add', router.checkUser, router.teacherRoute, students.addStudent);
-app.get('/student/edit/:id', router.checkUser, router.teacherRoute, students.edit);
-app.post('/student/update/:id', router.checkUser, router.teacherRoute, students.update);
-app.get('/subjects', router.checkUser, router.teacherRoute, subjects.show);
-app.post('/subject/add', router.checkUser, router.teacherRoute, subjects.add);
-app.get('/subject/edit/:id', router.checkUser, router.teacherRoute, subjects.edit);
-app.post('/subject/update/:id', router.checkUser, router.teacherRoute, subjects.update);
+app.get('/attendance',                  router.checkUser, router.teacherRoute, attendance.getAttendance);
+app.post('/attendance',                 router.checkUser, router.teacherRoute, attendance.takeAttendance);
+app.get('/addendance/edit/:id',         router.checkUser, router.teacherRoute, attendance.edit);
+app.post('/addendance/update/:id',      router.checkUser, router.teacherRoute, attendance.update);
+app.post('/addendance/delete/:id',      router.checkUser, router.teacherRoute, attendance.delete);
+app.get('/students',                    router.checkUser, router.teacherRoute, students.show);
+app.post('/student/add',                router.checkUser, router.teacherRoute, students.addStudent);
+app.get('/student/edit/:id',            router.checkUser, router.teacherRoute, students.edit);
+app.post('/student/update/:id',         router.checkUser, router.teacherRoute, students.update);
+app.get('/subjects',                    router.checkUser, router.teacherRoute, subjects.show);
+app.post('/subject/add',                router.checkUser, router.teacherRoute, subjects.add);
+app.get('/subject/edit/:id',            router.checkUser, router.teacherRoute, subjects.edit);
+app.post('/subject/update/:id',         router.checkUser, router.teacherRoute, subjects.update);
 
-app.get('/logout', router.checkUser, router.checkUser, router.logout);
+app.get('/logout', router.checkUser, router.logout);
 
 
 const port = process.env.PORT || 2000;
