@@ -20,7 +20,8 @@
     "express-handlebars": "^3.0.0",
     "express-myconnection": "^1.0.4",
     "express-session": "^1.13.0",
-    "mysql": "^2.10.2"
+    "mysql": "^2.10.2",
+    "nodemailer": "^0.7.1"
   },
   "devDependencies": {
     "mocha": "~2.4.5"
