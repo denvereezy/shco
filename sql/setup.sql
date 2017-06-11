@@ -10,7 +10,8 @@ create table users (
   username varchar(25) not null,
   password varchar(100) not null,
   role varchar(25) not null,
-  identifier varchar(25) not null
+  identifier varchar(25) not null,
+  email varchar(50) unique not null  
 );
 
 create table teachers (
