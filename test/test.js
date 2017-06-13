@@ -35,7 +35,8 @@ describe('testing auth service', function() {
                 const data = {
                     username: 'bibbo',
                     role: 'admin',
-                    identifier: 'bb'
+                    identifier: 'bb',
+                    email: 'test@email.com'
                 };
                 const hash = yield encryptonator.encryptPassword('1234');
                 data.password = hash;
@@ -54,7 +55,8 @@ describe('testing auth service', function() {
                 const data = {
                     username: 'donkey',
                     role: 'teacher',
-                    identifier: 'dd'
+                    identifier: 'dd',
+                    email: 'test@email.com'
                 };
                 const hash = yield encryptonator.encryptPassword('1234');
                 data.password = hash;
