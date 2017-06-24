@@ -63,3 +63,9 @@ exports.teacherRoute = function(req, res, next) {
         next();
     }
 };
+
+exports.updatePassword = function(req, res, next) {
+    res.render('resetPassword', {
+        layout: false
+    });
+};
