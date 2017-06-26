@@ -28,6 +28,7 @@ const StudentDataService    = require('./data-services/studentDataService');
 const AttendanceDataService = require('./data-services/attendanceDataService');
 const ResetDataService      = require('./data-services/resetDataService');
 const GeneralDataService    = require('./data-services/generalDataService');
+const SmtpDataService       = require('./data-services/smtpDataService');
 
 const dbOptions = {
   host: 'localhost',
@@ -47,7 +48,8 @@ const serviceSetupCallBack = function (connection) {
     studentDataService    : new StudentDataService(connection),
     attendanceDataService : new AttendanceDataService(connection),
     resetDataService      : new ResetDataService(connection),
-    generalDataService    : new GeneralDataService(connection)
+    generalDataService    : new GeneralDataService(connection),
+    smtpDataService       : new SmtpDataService()
   }
 };
 
@@ -62,10 +64,12 @@ app.use(flash());
 app.engine('handlebars', exhbs({defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
 
-app.get('/',                router.login);
-app.post('/login',          login.login);
-app.get('/password/reset',  router.reset);
-app.post('/password/reset', reset.reset);
+app.get('/',                       router.login);
+app.post('/login',                 login.login);
+app.get('/password/reset',         router.reset);
+app.post('/password/reset',        reset.reset);
+app.get('/password/reset/:token',  router.reset);
+app.post('/password/reset/:token', reset.updateUserAccount);
 
 app.use(router.checkUser);
 
@@ -105,8 +109,8 @@ app.post('/subject/update/:id',         router.checkUser, router.teacherRoute, s
 app.get('/logout', router.checkUser, router.logout);
 
 
-const port = process.env.PORT || 2000;
-const server = app.listen(port, function () {
+const port   = process.env.PORT || 2000;
+const server = app.listen(port, 'localhost', function () {
   const host = server.address().address;
   const port = server.address().port;
   console.log('App running on http://%s:%s', host, port);
