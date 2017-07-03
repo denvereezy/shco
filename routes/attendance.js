@@ -72,8 +72,7 @@ exports.edit = function(req, res, next) {
 exports.update = function(req, res, next) {
     co(function * () {
         try {
-            var user = req.session.user,
-                id = req.params.id,
+            var id = req.params.id,
                 data = {
                     student_id: req.body.student_id,
                     lesson: req.body.lesson
@@ -94,8 +93,7 @@ exports.update = function(req, res, next) {
 exports.delete = function(req, res, next) {
     co(function * () {
         try {
-            var user = req.session.user,
-                id = req.params.id;
+            var id = req.params.id;
             const services = yield req.getServices();
             const generalDataService = services.generalDataService;
             const result = generalDataService.delete('attendance', id);
