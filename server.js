@@ -94,9 +94,9 @@ app.get('/received-payments',           router.checkUser, router.teacherRoute, t
 app.post('/teacher-payment/update/:id', router.checkUser, router.teacherRoute, teachers.acceptPayment);
 app.get('/attendance',                  router.checkUser, router.teacherRoute, attendance.getAttendance);
 app.post('/attendance',                 router.checkUser, router.teacherRoute, attendance.takeAttendance);
-app.get('/addendance/edit/:id',         router.checkUser, router.teacherRoute, attendance.edit);
-app.post('/addendance/update/:id',      router.checkUser, router.teacherRoute, attendance.update);
-app.post('/addendance/delete/:id',      router.checkUser, router.teacherRoute, attendance.delete);
+app.get('/attendance/edit/:id',         router.checkUser, router.teacherRoute, attendance.edit);
+app.post('/attendance/update/:id',      router.checkUser, router.teacherRoute, attendance.update);
+app.post('/attendance/delete/:id',      router.checkUser, router.teacherRoute, attendance.delete);
 app.get('/students',                    router.checkUser, router.teacherRoute, students.show);
 app.post('/student/add',                router.checkUser, router.teacherRoute, students.addStudent);
 app.get('/student/edit/:id',            router.checkUser, router.teacherRoute, students.edit);
