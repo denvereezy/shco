@@ -3,10 +3,12 @@ const co = require('co');
 exports.add = function(req, res, next) {
     co(function * () {
         try {
-            var subject = req.body.subject;
+            var data = {
+                subject: req.body.subject
+            };
             const services = yield req.getServices();
             const generalDataService = services.generalDataService;
-            const result = yield generalDataService.add('subjects', subject);
+            const result = yield generalDataService.insert('subjects', data);
             req.flash('success', 'subject added');
             res.redrect('/subjects');
         } catch (err) {
