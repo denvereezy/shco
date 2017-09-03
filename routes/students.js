@@ -72,7 +72,7 @@ exports.update = function(req, res, next) {
 
             const services = yield req.getServices();
             const generalDataService = services.generalDataService;
-            const result = yield generalDataService.update('subjects', data, id);
+            const result = yield generalDataService.update('students', data, id);
             req.flash('success', 'Student updated');
             res.redirect('/students');
         } catch (err) {
