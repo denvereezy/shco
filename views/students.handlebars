@@ -36,16 +36,16 @@
                         <td>{{surname}}</td>
                         <td><a class="btn btn-warning" href="/student/edit/{{id}}">Edit</a>
                         </td>
-                        <td>
+                        <!-- <td>
                             <button type="button" onclick="func({{id}})" value="{{name}}" class="btn btn-danger name" data-toggle="modal" data-target="#studentModal">Delete</button>
-                        </td>
+                        </td> -->
                     </tr>
                 {{/each}}
             </tbody>
         </thead>
     </table>
 </div>
-<div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -64,11 +64,11 @@
             </div>
         </div>
     </div>
-</div>
-<script src="/js/jquery.min.js"></script>
+</div> -->
+<!-- <script src="/js/jquery.min.js"></script>
 <script type="text/javascript">
     function func(id) {
         $('.modal-body').html('<p>Are you sure?</p>');
         $("#form").attr("action", "/delete/student/" + id);
     }
-</script>
+</script> -->
