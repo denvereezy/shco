@@ -65,8 +65,8 @@
 <script src="/js/jquery.min.js"></script>
 <script type="text/javascript">
   setInterval(function() {
-    $("#payments_table").load("/received-payments #payments_table");
-  }, 2000);
+    $("#payments_table").load("/payments #payments_table");
+}, 20000);
 
   function getId(id) {
     $('.modal-body').html('<p>Are you sure?</p>');
