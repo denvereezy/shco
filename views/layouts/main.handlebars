@@ -83,34 +83,7 @@
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-
-            $('#alerts').addClass('hidden');
-            $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-               $(".alert").slideUp(500);
-             });
-
-            function alert() {
-                $('.alert').show();
-                $('#alerts').removeClass('hidden');
-            };
-
-            function goBack() {
-                window.history.back();
-            };
-
-            $("#word_count").on('keyup', function() {
-                var words = this.value.match(/\S+/g).length;
-                if (words > 50) {
-                    var trimmed = $(this).val().split(/\s+/, 50).join(" ");
-                    $(this).val(trimmed + " ");
-                } else {
-                    $('#word_left').text(50 - words);
-                };
-            });
-        });
-    </script>
+    <script src="/js/main.js"></script>
 </body>
 
 </html>
