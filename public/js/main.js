@@ -1,16 +1,16 @@
 $(document).ready(function() {
 
     $('#alerts').addClass('hidden');
-    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-       $(".alert").slideUp(500);
-     });
+    $(".alert").fadeTo(2000, 500).slideUp(500, function() {
+        $(".alert").slideUp(500);
+    });
 
-     window.alert = function() {
+    window.alert = function() {
         $('.alert').show();
         $('#alerts').removeClass('hidden');
     };
 
-     window.goBack = function() {
+    window.goBack = function() {
         window.history.back();
     };
 
@@ -24,8 +24,30 @@ $(document).ready(function() {
         };
     });
 
-     window.deleteAttendance = function(id) {
+    window.deleteAttendance = function(id) {
         $('.modal-body').html('<p>Are you sure?</p>');
         $("#form").attr("action", "/attendance/delete/" + id);
     }
+
+    window.deleteExtra(id) {
+        $('.modal-body').html('<p>Are you sure?</p>');
+        $("#form").attr("action", "/delete/payment/" + id);
+    }
+
+    setInterval(function() {
+        $("#payments_table").load("/payments #payments_table");
+    }, 20000);
+
+    window.deletePayment(id) {
+        $('.modal-body').html('<p>Are you sure?</p>');
+        $("#form").attr("action", "/delete/" + id);
+    }
+
+    if ($("input[name='confirmed']")) {
+        $("input[name='confirmed']").prop('disabled', true);
+        $("input[name='confirmed']").val('Confirmed');
+    };
+    setInterval(function() {
+        $("#rp_table").load("/received-payments #rp_table");
+    }, 20000);
 });
