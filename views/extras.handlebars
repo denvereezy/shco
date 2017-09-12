@@ -22,7 +22,7 @@
                             <td><a class="btn btn-warning" href="/edit/payment/{{id}}">Edit</a>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger" onclick="func({{id}})" data-toggle="modal" data-target="#paymentModal">Delete</button>
+                                <button type="button" class="btn btn-danger" onclick="deleteExtra({{id}})" data-toggle="modal" data-target="#paymentModal">Delete</button>
                             </td>
                         </tr>
                     {{/each}}
@@ -51,10 +51,3 @@
         </div>
     </div>
 {{/if}}
-<script src="/js/jquery.min.js"></script>
-<script type="text/javascript">
-    function func(id) {
-        $('.modal-body').html('<p>Are you sure?</p>');
-        $("#form").attr("action", "/delete/payment/" + id);
-    }
-</script>
