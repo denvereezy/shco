@@ -5,8 +5,8 @@ exports.show = function(req, res, next) {
         try {
             var user = req.session.user;
             const services = yield req.getServices();
-            const generalDataService = services.generalDataService;
-            const result = yield generalDataService.select('students');
+            const studentDataService = services.studentDataService;
+            const result = yield studentDataService.getStudents();
             res.render('students', {
                 students: result,
                 user: user,
@@ -78,6 +78,26 @@ exports.update = function(req, res, next) {
         } catch (err) {
             req.flash('alert', 'Error occured on update');
             res.redirect('/student/update/' + id);
+            next(err);
+        }
+    });
+};
+
+exports.delete = function(req, res, next) {
+    co(function * () {
+        try {
+            var id = req.params.id;
+            var data = {
+             deleted: 1
+            };
+            const services = yield req.getServices();
+            const generalDataService = services.generalDataService;
+            const result = yield generalDataService.update('students', data, id);
+            req.flash('success', 'Student deleted');
+            res.redirect('/students');
+        } catch (err) {
+            req.flash('alert', 'Error occured on delete');
+            res.redirect('/students');
             next(err);
         }
     });
