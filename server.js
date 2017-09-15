@@ -99,6 +99,7 @@ app.post('/attendance/delete/:id',      router.checkUser, router.teacherRoute, a
 app.get('/students',                    router.checkUser, router.teacherRoute, students.show);
 app.post('/student/add',                router.checkUser, router.teacherRoute, students.addStudent);
 app.get('/student/edit/:id',            router.checkUser, router.teacherRoute, students.edit);
+app.post('/student/delete/:id',          router.checkUser, router.teacherRoute, students.delete);
 app.post('/student/update/:id',         router.checkUser, router.teacherRoute, students.update);
 app.get('/subjects',                    router.checkUser, router.teacherRoute, subjects.show);
 app.post('/subject/add',                router.checkUser, router.teacherRoute, subjects.add);
