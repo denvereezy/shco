@@ -35,7 +35,8 @@ create table extras (
 create table students (
   id int not null primary key auto_increment,
   name varchar(25) not null,
-  surname varchar(25) not null
+  surname varchar(25) not null,
+  deleted int not null default 0
 );
 
 create table subjects (
