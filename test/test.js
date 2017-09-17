@@ -338,6 +338,34 @@ describe('testing student service', function() {
             };
         });
     });
+
+    it('should soft delete a student', function(done) {
+        co(function * () {
+            try {
+                var id = 1,
+                    data = {
+                        deleted: 1
+                    };
+                const result = yield generalDataService.update('students', data, id);
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
+
+    it('should show all studends not soft deleted', function(done) {
+        co(function * () {
+            try {
+                const result = yield studentDataService.getStudents();
+                assert(result);
+                done();
+            } catch (err) {
+                console.log(err);
+            };
+        });
+    });
 });
 
 describe('testing subject service', function() {
