@@ -26,7 +26,8 @@ exports.getAttendance = function(req, res, next) {
             const services = yield req.getServices();
             const generalDataService = services.generalDataService;
             const attendanceDataService = services.attendanceDataService;
-            const students = generalDataService.select('students');
+            const studentDataService = services.studentDataService;
+            const students = studentDataService.getStudents();
             const attendance = attendanceDataService.getAttendance();
             const subjects = generalDataService.select('subjects');
             const result = yield[students,
@@ -100,8 +101,8 @@ exports.delete = function(req, res, next) {
             req.flash('success', 'Record deleted');
             res.redirect('/attendance');
         } catch (err) {
+            req.flash('Error occurred');
             res.redirect('/attendance');
-            req.flash('alert', 'Error occurred');
             next(err);
         }
     });
