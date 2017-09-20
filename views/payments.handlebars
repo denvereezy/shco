@@ -31,7 +31,7 @@
                   <li><a class="btn btn-warning form-control" href="/edit/{{id}}">Edit</a></li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <button type="button" onclick="getId({{id}})" class="btn btn-danger form-control" data-toggle="modal" data-target="#paymentModal">Delete</button>
+                    <button type="button" onclick="deletePayment({{id}})" class="btn btn-danger form-control" data-toggle="modal" data-target="#paymentModal">Delete</button>
                   </li>
                 </ul>
               </div>
@@ -62,14 +62,3 @@
     </div>
   </div>
 </div>
-<script src="/js/jquery.min.js"></script>
-<script type="text/javascript">
-  setInterval(function() {
-    $("#payments_table").load("/payments #payments_table");
-}, 20000);
-
-  function getId(id) {
-    $('.modal-body').html('<p>Are you sure?</p>');
-    $("#form").attr("action", "/delete/" + id);
-  }
-</script>
