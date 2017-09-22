@@ -30,13 +30,3 @@
         </thead>
     </table>
 </div>
-<script src="/js/jquery.min.js"></script>
-<script type="text/javascript">
-    if ($("input[name='confirmed']")) {
-        $("input[name='confirmed']").prop('disabled', true);
-        $("input[name='confirmed']").val('Confirmed');
-    };
-    setInterval(function() {
-        $("#rp_table").load("/received-payments #rp_table");
-    }, 20000);
-</script>
