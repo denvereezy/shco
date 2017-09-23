@@ -46,7 +46,8 @@ create table students (
 
 create table subjects (
   id int not null primary key auto_increment,
-  subject varchar(100)
+  subject varchar(100),
+  deleted int not null default 0
 );
 
 create table attendance (
