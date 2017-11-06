@@ -88,7 +88,7 @@ exports.delete = function(req, res, next) {
         try {
             var id = req.params.id;
             var data = {
-             deleted: 1
+                deleted: 1
             };
             const services = yield req.getServices();
             const generalDataService = services.generalDataService;
