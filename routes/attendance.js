@@ -11,7 +11,7 @@ exports.takeAttendance = function(req, res, next) {
             const services = yield req.getServices();
             const generalDataService = services.generalDataService;
             const result = yield generalDataService.insert('attendance', data);
-            res.redirect('attendance');
+            res.redirect('/attendance');
         } catch (err) {
             req.flash('alert', 'Error occurred');
             next(err);
